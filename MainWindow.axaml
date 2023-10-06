@@ -2,8 +2,71 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1260" d:DesignHeight="896"
         x:Class="ImageProcessingApp.MainWindow"
+        Icon="/Assets/logo.ico"
         Title="ImageProcessingApp">
-    Welcome to Avalonia!
+    
+    <SplitView IsPaneOpen="True"
+               DisplayMode="Overlay"
+               OpenPaneLength="180"
+               PaneBackground="Transparent"
+               Background="#F3F3F3">
+        <SplitView.Pane>
+            <DockPanel>
+                <Viewbox Stretch="Uniform">
+                <Border Width="165.38"
+                        Opacity="0.9"
+                        BoxShadow="0 0 3.5 0 #cccccc"
+                        BorderThickness="0.875"
+                        BorderBrush="#ffffff"
+                        Background="#FFFFFF"
+                        DockPanel.Dock="Left">
+                
+                <StackPanel Spacing="10">
+                    <Button Margin="31.065"
+                            Width="103.25"
+                            Height="103.25">
+                        <Image Source="/Assets/GPUModeButton.png"/>  
+                    </Button>
+                    <Button Margin="44.6275"
+                            Width="76.125"
+                            Height="76.125">
+                        <Image Source="/Assets/importingButton.png"/>
+                    </Button>
+                    <Button Margin="44.6275"
+                            Width="76.125"
+                            Height="76.125">
+                        <Image Source="/Assets/filteringButton.png"/>
+                    </Button>
+                    <Button Margin="44.6275"
+                            Width="76.125"
+                            Height="76.125">
+                        <Image Source="/Assets/flipButton.png"/>
+                    </Button>
+                    <Button Margin="44.6275"
+                            Width="76.125"
+                            Height="76.125">
+                        <Image Source="/Assets/rotationButton.png"/>
+                    </Button>
+                    <Button Margin="44.6275"
+                            Width="76.125"
+                            Height="76.125">
+                        <Image Source="/Assets/savingButton.png"/>
+                    </Button>
+    
+                </StackPanel>
+                
+                </Border>
+                </Viewbox>
+                <!-- DockPanel requires a last child control with no dock property -->
+                <Border></Border>
+            </DockPanel>
+        </SplitView.Pane>
+        <Viewbox Stretch="UniformToFill" Width="1260" Height="896">
+            <Image Margin="20" Height="1000" Width="1000" 
+                   Source="/Assets/ramin-talebi-rFRfxVM606s-unsplash 1.png"/>  
+        </Viewbox>
+        
+    </SplitView>
 </Window>
