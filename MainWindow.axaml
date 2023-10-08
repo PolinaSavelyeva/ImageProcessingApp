@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="1260" d:DesignHeight="896"
+        mc:Ignorable="d" d:DesignWidth="1500" d:DesignHeight="920"
         x:Class="ImageProcessingApp.MainWindow"
         Icon="/Assets/logo.ico"
         Title="ImageProcessingApp">
@@ -13,64 +13,103 @@
                PaneBackground="Transparent"
                Background="#F3F3F3">
         <SplitView.Pane>
-            <DockPanel>
-                <Viewbox Stretch="Uniform">
+            <Viewbox HorizontalAlignment="Left">
+            <Panel Width="180">
                 <Border Width="165.38"
-                        Opacity="0.9"
                         BoxShadow="0 0 3.5 0 #cccccc"
                         BorderThickness="0.875"
                         BorderBrush="#ffffff"
+                        Opacity="0.8"
                         Background="#FFFFFF"
-                        DockPanel.Dock="Left">
-                
-                <StackPanel Spacing="10">
-                    <Button Margin="31.065"
-                            Width="103.25"
-                            Height="103.25"
-                            Click="ButtonClicked"
-                            ToolTip.Tip="GPU mode">
-                        <Image Source="/Assets/GPUModeButton.png"/>  
-                    </Button>
-                    <Button Margin="44.6275"
-                            Width="76.125"
-                            Height="76.125"
-                            ToolTip.Tip="Import">
-                        <Image Source="/Assets/importingButton.png"/>
-                    </Button>
-                    <Button Margin="44.6275"
-                            Width="76.125"
-                            Height="76.125"
-                            ToolTip.Tip="Filter">
-                        <Image Source="/Assets/filteringButton.png"/>
-                    </Button>
-                    <Button Margin="44.6275"
-                            Width="76.125"
-                            Height="76.125"
-                            ToolTip.Tip="Flip">
-                        <Image Source="/Assets/flipButton.png"/>
-                    </Button>
-                    <Button Margin="44.6275"
-                            Width="76.125"
-                            Height="76.125"
-                            ToolTip.Tip="Rotate">
-                        <Image Source="/Assets/rotationButton.png"/>
-                    </Button>
-                    <Button Margin="44.6275"
-                            Width="76.125"
-                            Height="76.125"
-                            ToolTip.Tip="Save">
-                        <Image Source="/Assets/savingButton.png"/>
-                    </Button>
-    
-                </StackPanel>
-                
+                        HorizontalAlignment="Left">
                 </Border>
-                </Viewbox>
-                <!-- DockPanel requires a last child control with no dock property -->
-                <Border></Border>
-            </DockPanel>
+                <StackPanel HorizontalAlignment="Left">
+                        <Button Margin="31.065"
+                                Padding="7"
+                                Width="95.25"
+                                Height="95.25"
+                                CornerRadius="20"
+                                Click="ButtonClicked"
+                                ToolTip.Tip="GPU mode"
+                                Background="Transparent">
+                            <Image  Source="/Assets/GPUModeButton.png"/>  
+                        </Button>
+                        <Button Margin="44.6275"
+                                Padding="7"
+                                Width="66.125"
+                                Height="66.125"
+                                CornerRadius="20"
+                                ToolTip.Tip="Import"
+                                Background="Transparent">
+                            <Image Source="/Assets/importingButton.png"/>
+                            <Button.Flyout>
+                                <MenuFlyout Placement="Right">
+                                    <TextBox Watermark="Path to image" />
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Margin="44.6275"
+                                Padding="7"
+                                Width="66.125"
+                                Height="66.125"
+                                CornerRadius="20"
+                                ToolTip.Tip="Filter"
+                                Background="Transparent">
+                            <Image Source="/Assets/filteringButton.png"/>
+                            <Button.Flyout>
+                                <MenuFlyout Placement="Right">
+                                    <MenuItem Header="Gaussian Blur"/>
+                                    <MenuItem Header="Edges"/>
+                                    <MenuItem Header="Darken"/>    
+                                    <MenuItem Header="Lighten"/>    
+                                    <MenuItem Header="Sharpen"/>    
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Margin="44.6275"
+                                Padding="7"
+                                Width="66.125"
+                                Height="66.125"
+                                CornerRadius="20"
+                                ToolTip.Tip="Flip"
+                                Background="Transparent">
+                            <Image Source="/Assets/flipButton.png"/>
+                            <Button.Flyout>
+                                <MenuFlyout Placement="Right">
+                                    <MenuItem Header="Vertical"/>
+                                    <MenuItem Header="Horizontal"/>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Margin="44.6275"
+                                Padding="7"
+                                Width="66.125"
+                                Height="66.125"
+                                CornerRadius="20"
+                                ToolTip.Tip="Rotate"
+                                Background="Transparent">
+                            <Image Source="/Assets/rotationButton.png"/>
+                            <Button.Flyout>
+                                <MenuFlyout Placement="Right">
+                                    <MenuItem Header="Clockwise"/>
+                                    <MenuItem Header="Counterclockwise"/>
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button Margin="44.6275"
+                                Padding="7"
+                                Width="66.125"
+                                Height="66.125"
+                                CornerRadius="20"
+                                ToolTip.Tip="Save"
+                                Background="Transparent">
+                                <Image Source="/Assets/savingButton.png"/>
+                        </Button>
+                </StackPanel>
+            </Panel>
+            </Viewbox>
         </SplitView.Pane>
-        <Viewbox Stretch="UniformToFill" Width="1260" Height="896">
+        <Viewbox Stretch="UniformToFill" Width="1500" Height="920">
             <Image Margin="20" Height="1000" Width="1000" 
                    Source="/Assets/ramin-talebi-rFRfxVM606s-unsplash 1.png"/>  
         </Viewbox>

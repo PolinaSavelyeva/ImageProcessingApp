@@ -18,8 +18,8 @@ type MainWindow () as this =
 #if DEBUG
         this.AttachDevTools()
 #endif
-        this.Width <- 1260
-        this.Height <- 896
+        this.Width <- 1500
+        this.Height <- 920
         
         AvaloniaXamlLoader.Load(this)
 
