@@ -26,32 +26,38 @@
                 <StackPanel Spacing="10">
                     <Button Margin="31.065"
                             Width="103.25"
-                            Height="103.25">
+                            Height="103.25"
+                            ToolTip.Tip="GPU mode">
                         <Image Source="/Assets/GPUModeButton.png"/>  
                     </Button>
                     <Button Margin="44.6275"
                             Width="76.125"
-                            Height="76.125">
+                            Height="76.125"
+                            ToolTip.Tip="Import">
                         <Image Source="/Assets/importingButton.png"/>
                     </Button>
                     <Button Margin="44.6275"
                             Width="76.125"
-                            Height="76.125">
+                            Height="76.125"
+                            ToolTip.Tip="Filter">
                         <Image Source="/Assets/filteringButton.png"/>
                     </Button>
                     <Button Margin="44.6275"
                             Width="76.125"
-                            Height="76.125">
+                            Height="76.125"
+                            ToolTip.Tip="Flip">
                         <Image Source="/Assets/flipButton.png"/>
                     </Button>
                     <Button Margin="44.6275"
                             Width="76.125"
-                            Height="76.125">
+                            Height="76.125"
+                            ToolTip.Tip="Rotate">
                         <Image Source="/Assets/rotationButton.png"/>
                     </Button>
                     <Button Margin="44.6275"
                             Width="76.125"
-                            Height="76.125">
+                            Height="76.125"
+                            ToolTip.Tip="Save">
                         <Image Source="/Assets/savingButton.png"/>
                     </Button>
     
