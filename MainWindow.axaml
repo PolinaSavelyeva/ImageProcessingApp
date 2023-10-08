@@ -27,6 +27,7 @@
                     <Button Margin="31.065"
                             Width="103.25"
                             Height="103.25"
+                            Click="ButtonClicked"
                             ToolTip.Tip="GPU mode">
                         <Image Source="/Assets/GPUModeButton.png"/>  
                     </Button>
