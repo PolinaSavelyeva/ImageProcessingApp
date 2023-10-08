@@ -5,7 +5,7 @@ open Avalonia
 
 module Program =
 
-    [<CompiledName "ImageProcessingApp">] 
+    [<CompiledName "BuildAvaloniaApp">] 
     let buildImageProcessingApp () = 
         AppBuilder
             .Configure<App>()
