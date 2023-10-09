@@ -17,12 +17,12 @@
                 <ResourceDictionary x:Key="Light">
                     <SolidColorBrush x:Key="BackgroundBrush">#F3F3F3</SolidColorBrush>
                     <SolidColorBrush x:Key="PanelBrush">#FFFFFF</SolidColorBrush>
-                    <Image Source="/Assets/GPUModeButton.png" x:Key="GPUIcon" />
+                    <Image x:Key="GPUIcon" Source="/Assets/GPUModeDark.png" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="BackgroundBrush">#444444</SolidColorBrush>
                     <SolidColorBrush x:Key="PanelBrush">#0A0A0A</SolidColorBrush>
-                    <Image Source="/Assets/GPUModeButtonLight.png" x:Key="GPUIcon" />
+                    <Image x:Key="GPUIcon" Source="/Assets/GPUModeLight.png" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
@@ -64,7 +64,7 @@
                             Padding="7"
                             ToolTip.Tip="Import"
                             Width="66.125">
-                            <Image Source="/Assets/importingButton.png" />
+                            <Image Source="/Assets/importWhite.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
                                     <TextBox Watermark="Path to image" />
@@ -80,7 +80,7 @@
                             Padding="7"
                             ToolTip.Tip="Filter"
                             Width="66.125">
-                            <Image Source="/Assets/filteringButton.png" />
+                            <Image Source="/Assets/filterLight.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
                                     <MenuItem Header="Gaussian Blur" />
@@ -99,7 +99,7 @@
                             Padding="7"
                             ToolTip.Tip="Flip"
                             Width="66.125">
-                            <Image Source="/Assets/flipButton.png" />
+                            <Image Source="/Assets/flipLight.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
                                     <MenuItem Header="Vertical" />
@@ -115,7 +115,7 @@
                             Padding="7"
                             ToolTip.Tip="Rotate"
                             Width="66.125">
-                            <Image Source="/Assets/rotationButton.png" />
+                            <Image Source="/Assets/rotateLight.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
                                     <MenuItem Header="Clockwise" />
@@ -131,7 +131,7 @@
                             Padding="7"
                             ToolTip.Tip="Save"
                             Width="66.125">
-                            <Image Source="/Assets/savingButton.png" />
+                            <Image Source="/Assets/saveLight.png" />
                         </Button>
                     </StackPanel>
                 </Panel>
