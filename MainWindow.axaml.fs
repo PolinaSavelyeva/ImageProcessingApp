@@ -14,6 +14,14 @@ type MainWindow () as this =
 
     do this.InitializeComponent()    
       
+    member this.SwitchToDarkTheme(source: obj, args: RoutedEventArgs) =
+           
+        this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Dark) |> ignore
+    
+    member this.SwitchToLightTheme(source: obj, args: RoutedEventArgs) =
+           
+        this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Light) |> ignore
+        
     member private this.InitializeComponent() =        
 #if DEBUG
         this.AttachDevTools()

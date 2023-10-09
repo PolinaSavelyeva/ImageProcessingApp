@@ -1,4 +1,5 @@
 <Window
+    Background="Transparent"
     Icon="/Assets/logo.ico"
     Title="ImageProcessingApp"
     d:DesignHeight="920"
@@ -31,7 +32,6 @@
         Background="{DynamicResource BackgroundBrush}"
         DisplayMode="Overlay"
         IsPaneOpen="True"
-        OpenPaneLength="180"
         PaneBackground="Transparent">
         <SplitView.Pane>
             <Viewbox HorizontalAlignment="Left">
@@ -45,14 +45,16 @@
                         Opacity="0.8"
                         Width="165.38" />
                     <StackPanel HorizontalAlignment="Left">
-                        <Button
+                        <ToggleButton
                             Background="Transparent"
+                            Checked="SwitchToDarkTheme"
                             Content="{DynamicResource GPUIcon}"
                             CornerRadius="20"
                             Height="95.25"
                             Margin="31.065"
                             Padding="7"
                             ToolTip.Tip="GPU mode"
+                            Unchecked="SwitchToLightTheme"
                             Width="95.25" />
                         <Button
                             Background="Transparent"
@@ -135,10 +137,7 @@
                 </Panel>
             </Viewbox>
         </SplitView.Pane>
-        <Viewbox
-            Height="920"
-            Stretch="UniformToFill"
-            Width="1500">
+        <Viewbox Stretch="UniformToFill" Width="1500">
             <Image
                 Height="1000"
                 Margin="20"
