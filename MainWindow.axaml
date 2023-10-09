@@ -1,118 +1,150 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="1500" d:DesignHeight="920"
-        x:Class="ImageProcessingApp.MainWindow"
-        Icon="/Assets/logo.ico"
-        Title="ImageProcessingApp">
-    
-    <SplitView IsPaneOpen="True"
-               DisplayMode="Overlay"
-               OpenPaneLength="180"
-               PaneBackground="Transparent"
-               Background="#F3F3F3">
+<Window
+    Icon="/Assets/logo.ico"
+    Title="ImageProcessingApp"
+    d:DesignHeight="920"
+    d:DesignWidth="1500"
+    mc:Ignorable="d"
+    x:Class="ImageProcessingApp.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="BackgroundBrush">#F3F3F3</SolidColorBrush>
+                    <SolidColorBrush x:Key="PanelBrush">#FFFFFF</SolidColorBrush>
+                    <Image Source="/Assets/GPUModeButton.png" x:Key="GPUIcon" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="BackgroundBrush">#444444</SolidColorBrush>
+                    <SolidColorBrush x:Key="PanelBrush">#0A0A0A</SolidColorBrush>
+                    <Image Source="/Assets/GPUModeButtonLight.png" x:Key="GPUIcon" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <SplitView
+        Background="{DynamicResource BackgroundBrush}"
+        DisplayMode="Overlay"
+        IsPaneOpen="True"
+        OpenPaneLength="180"
+        PaneBackground="Transparent">
         <SplitView.Pane>
             <Viewbox HorizontalAlignment="Left">
-            <Panel Width="180">
-                <Border Width="165.38"
-                        BoxShadow="0 0 3.5 0 #cccccc"
+                <Panel Width="180">
+                    <Border
+                        Background="{DynamicResource PanelBrush}"
+                        BorderBrush="{DynamicResource PanelBrush}"
                         BorderThickness="0.875"
-                        BorderBrush="#ffffff"
+                        BoxShadow="0 0 3.5 0 #cccccc"
+                        HorizontalAlignment="Left"
                         Opacity="0.8"
-                        Background="#FFFFFF"
-                        HorizontalAlignment="Left">
-                </Border>
-                <StackPanel HorizontalAlignment="Left">
-                        <Button Margin="31.065"
-                                Padding="7"
-                                Width="95.25"
-                                Height="95.25"
-                                CornerRadius="20"
-                                Click="ButtonClicked"
-                                ToolTip.Tip="GPU mode"
-                                Background="Transparent">
-                            <Image  Source="/Assets/GPUModeButton.png"/>  
-                        </Button>
-                        <Button Margin="44.6275"
-                                Padding="7"
-                                Width="66.125"
-                                Height="66.125"
-                                CornerRadius="20"
-                                ToolTip.Tip="Import"
-                                Background="Transparent">
-                            <Image Source="/Assets/importingButton.png"/>
+                        Width="165.38" />
+                    <StackPanel HorizontalAlignment="Left">
+                        <Button
+                            Background="Transparent"
+                            Content="{DynamicResource GPUIcon}"
+                            CornerRadius="20"
+                            Height="95.25"
+                            Margin="31.065"
+                            Padding="7"
+                            ToolTip.Tip="GPU mode"
+                            Width="95.25" />
+                        <Button
+                            Background="Transparent"
+                            CornerRadius="20"
+                            Height="66.125"
+                            Margin="44.6275"
+                            Padding="7"
+                            ToolTip.Tip="Import"
+                            Width="66.125">
+                            <Image Source="/Assets/importingButton.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
                                     <TextBox Watermark="Path to image" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
-                        <Button Margin="44.6275"
-                                Padding="7"
-                                Width="66.125"
-                                Height="66.125"
-                                CornerRadius="20"
-                                ToolTip.Tip="Filter"
-                                Background="Transparent">
-                            <Image Source="/Assets/filteringButton.png"/>
+
+                        <Button
+                            Background="Transparent"
+                            CornerRadius="20"
+                            Height="66.125"
+                            Margin="44.6275"
+                            Padding="7"
+                            ToolTip.Tip="Filter"
+                            Width="66.125">
+                            <Image Source="/Assets/filteringButton.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
-                                    <MenuItem Header="Gaussian Blur"/>
-                                    <MenuItem Header="Edges"/>
-                                    <MenuItem Header="Darken"/>    
-                                    <MenuItem Header="Lighten"/>    
-                                    <MenuItem Header="Sharpen"/>    
+                                    <MenuItem Header="Gaussian Blur" />
+                                    <MenuItem Header="Edges" />
+                                    <MenuItem Header="Darken" />
+                                    <MenuItem Header="Lighten" />
+                                    <MenuItem Header="Sharpen" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
-                        <Button Margin="44.6275"
-                                Padding="7"
-                                Width="66.125"
-                                Height="66.125"
-                                CornerRadius="20"
-                                ToolTip.Tip="Flip"
-                                Background="Transparent">
-                            <Image Source="/Assets/flipButton.png"/>
+                        <Button
+                            Background="Transparent"
+                            CornerRadius="20"
+                            Height="66.125"
+                            Margin="44.6275"
+                            Padding="7"
+                            ToolTip.Tip="Flip"
+                            Width="66.125">
+                            <Image Source="/Assets/flipButton.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
-                                    <MenuItem Header="Vertical"/>
-                                    <MenuItem Header="Horizontal"/>
+                                    <MenuItem Header="Vertical" />
+                                    <MenuItem Header="Horizontal" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
-                        <Button Margin="44.6275"
-                                Padding="7"
-                                Width="66.125"
-                                Height="66.125"
-                                CornerRadius="20"
-                                ToolTip.Tip="Rotate"
-                                Background="Transparent">
-                            <Image Source="/Assets/rotationButton.png"/>
+                        <Button
+                            Background="Transparent"
+                            CornerRadius="20"
+                            Height="66.125"
+                            Margin="44.6275"
+                            Padding="7"
+                            ToolTip.Tip="Rotate"
+                            Width="66.125">
+                            <Image Source="/Assets/rotationButton.png" />
                             <Button.Flyout>
                                 <MenuFlyout Placement="Right">
-                                    <MenuItem Header="Clockwise"/>
-                                    <MenuItem Header="Counterclockwise"/>
+                                    <MenuItem Header="Clockwise" />
+                                    <MenuItem Header="Counterclockwise" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
-                        <Button Margin="44.6275"
-                                Padding="7"
-                                Width="66.125"
-                                Height="66.125"
-                                CornerRadius="20"
-                                ToolTip.Tip="Save"
-                                Background="Transparent">
-                                <Image Source="/Assets/savingButton.png"/>
+                        <Button
+                            Background="Transparent"
+                            CornerRadius="20"
+                            Height="66.125"
+                            Margin="44.6275"
+                            Padding="7"
+                            ToolTip.Tip="Save"
+                            Width="66.125">
+                            <Image Source="/Assets/savingButton.png" />
                         </Button>
-                </StackPanel>
-            </Panel>
+                    </StackPanel>
+                </Panel>
             </Viewbox>
         </SplitView.Pane>
-        <Viewbox Stretch="UniformToFill" Width="1500" Height="920">
-            <Image Margin="20" Height="1000" Width="1000" 
-                   Source="/Assets/ramin-talebi-rFRfxVM606s-unsplash 1.png"/>  
+        <Viewbox
+            Height="920"
+            Stretch="UniformToFill"
+            Width="1500">
+            <Image
+                Height="1000"
+                Margin="20"
+                Source="/Assets/ramin-talebi-rFRfxVM606s-unsplash 1.png"
+                Width="1000" />
         </Viewbox>
-        
+
     </SplitView>
 </Window>

@@ -1,11 +1,73 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="ImageProcessingApp.App"
-             RequestedThemeVariant="Light">
-    
-    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+<Application
+    RequestedThemeVariant="Light"
+    x:Class="ImageProcessingApp.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
 
     <Application.Styles>
-        <FluentTheme />
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources
+                    Accent="#ff0073cf"
+                    AltHigh="White"
+                    AltLow="White"
+                    AltMedium="White"
+                    AltMediumHigh="White"
+                    AltMediumLow="White"
+                    BaseHigh="Black"
+                    BaseLow="#fff3f3f3"
+                    BaseMedium="#ffa8a8a8"
+                    BaseMediumHigh="#ff767676"
+                    BaseMediumLow="#ff8f8f8f"
+                    ChromeAltLow="#ff767676"
+                    ChromeBlackHigh="Black"
+                    ChromeBlackLow="#fff3f3f3"
+                    ChromeBlackMedium="#ff767676"
+                    ChromeBlackMediumLow="#ffa8a8a8"
+                    ChromeDisabledHigh="#fff3f3f3"
+                    ChromeDisabledLow="#ffa8a8a8"
+                    ChromeGray="#ff8f8f8f"
+                    ChromeHigh="#fff3f3f3"
+                    ChromeLow="#fffbfbfb"
+                    ChromeMedium="#fff9f9f9"
+                    ChromeMediumLow="#fffbfbfb"
+                    ChromeWhite="White"
+                    ListLow="#fff9f9f9"
+                    ListMedium="#fff3f3f3"
+                    RegionColor="#fff3f3f3"
+                    x:Key="Light" />
+                <ColorPaletteResources
+                    Accent="#ff0073cf"
+                    AltHigh="Black"
+                    AltLow="Black"
+                    AltMedium="Black"
+                    AltMediumHigh="Black"
+                    AltMediumLow="Black"
+                    BaseHigh="White"
+                    BaseLow="#bd444444"
+                    BaseMedium="#f2a2a2a2"
+                    BaseMediumHigh="#ffbababa"
+                    BaseMediumLow="#d7737373"
+                    ChromeAltLow="#ffbababa"
+                    ChromeBlackHigh="Black"
+                    ChromeBlackLow="#ffbababa"
+                    ChromeBlackMedium="Black"
+                    ChromeBlackMediumLow="Black"
+                    ChromeDisabledHigh="#bd444444"
+                    ChromeDisabledLow="#f2a2a2a2"
+                    ChromeGray="#e58b8b8b"
+                    ChromeHigh="#e58b8b8b"
+                    ChromeLow="#f21d1d1d"
+                    ChromeMedium="#e5272727"
+                    ChromeMediumLow="#ca3a3a3a"
+                    ChromeWhite="White"
+                    ListLow="#e5272727"
+                    ListMedium="#bd444444"
+                    RegionColor="#ff444444"
+                    x:Key="Dark" />
+            </FluentTheme.Palettes>
+        </FluentTheme>
     </Application.Styles>
 </Application>
