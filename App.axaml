@@ -10,7 +10,7 @@
         <FluentTheme>
             <FluentTheme.Palettes>
                 <ColorPaletteResources
-                    Accent="#ff0073cf"
+                    Accent="Transparent"
                     AltHigh="White"
                     AltLow="White"
                     AltMedium="White"
@@ -39,7 +39,7 @@
                     RegionColor="#fff3f3f3"
                     x:Key="Light" />
                 <ColorPaletteResources
-                    Accent="#ff0073cf"
+                    Accent="Transparent"
                     AltHigh="Black"
                     AltLow="Black"
                     AltMedium="Black"

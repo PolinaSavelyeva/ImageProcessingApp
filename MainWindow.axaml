@@ -18,16 +18,64 @@
                     <SolidColorBrush x:Key="BackgroundBrush">#F3F3F3</SolidColorBrush>
                     <SolidColorBrush x:Key="PanelBrush">#FFFFFF</SolidColorBrush>
                     <Image x:Key="GPUIcon" Source="/Assets/GPUModeDark.png" />
+                    <Color x:Key="ShadowColor">{Binding Color.FromRgb(204, 204, 204)}</Color>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="BackgroundBrush">#444444</SolidColorBrush>
                     <SolidColorBrush x:Key="PanelBrush">#0A0A0A</SolidColorBrush>
                     <Image x:Key="GPUIcon" Source="/Assets/GPUModeLight.png" />
+                    <Color x:Key="ShadowColor">" #0A0A0A"</Color>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
+    <Window.Styles>
+        <Style Selector="Button.menuButton">
+            <Setter Property="Background" 
+                    Value="Transparent"/>
+            <Setter Property="CornerRadius" 
+                    Value="20"/>
+            <Setter Property="Height" 
+                    Value="66.125"/>
+            <Setter Property="Margin" 
+                    Value="44.6275"/>
+            <Setter Property="Padding" 
+                    Value="7"/>
+            <Setter Property="Width" 
+                    Value="66.125"/>
+        </Style>
+        <Style Selector="MenuFlyoutPresenter.menuFlyout">
+            <Setter Property="Background"
+                    Value="{DynamicResource PanelBrush}" />
+            <Setter Property="BorderBrush"
+                    Value="#EFEFEF" />
+            <Setter Property="CornerRadius"
+                    Value="0 10 10 0" />
+            <Setter Property="BorderThickness"
+                    Value="1" />
+            <Setter Property="Margin"
+                    Value="54" />
+            <Setter Property="MinWidth"
+                    Value="240" />
+            <Setter Property="Opacity"
+                    Value="0.9" />
+        </Style>
+        <Style Selector="MenuItem.flyout">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="FontFamily"
+                    Value="Inter" />
+            <Setter Property="Margin"
+                    Value="7" />
+            <Setter Property="FontWeight"
+                    Value="500" />
+        </Style>
+        <Style Selector="BoxShadow.boxShadow">
+            <Setter Property="Color"
+                    Value="{DynamicResource ShadowColor}"/>
+        </Style>
+    </Window.Styles>
+    
     <SplitView
         Background="{DynamicResource BackgroundBrush}"
         DisplayMode="Overlay"
@@ -40,9 +88,9 @@
                         Background="{DynamicResource PanelBrush}"
                         BorderBrush="{DynamicResource PanelBrush}"
                         BorderThickness="0.875"
-                        BoxShadow="0 0 3.5 0 #cccccc"
+                        Classes="border"
                         HorizontalAlignment="Left"
-                        Opacity="0.8"
+                        Opacity="0.9"
                         Width="165.38" />
                     <StackPanel HorizontalAlignment="Left">
                         <ToggleButton
@@ -57,80 +105,68 @@
                             Unchecked="SwitchToLightTheme"
                             Width="95.25" />
                         <Button
-                            Background="Transparent"
-                            CornerRadius="20"
-                            Height="66.125"
-                            Margin="44.6275"
-                            Padding="7"
-                            ToolTip.Tip="Import"
-                            Width="66.125">
-                            <Image Source="/Assets/importWhite.png" />
+                            Classes="menuButton"
+                            ToolTip.Tip="Import">
+                            <Image Source="/Assets/importLight.png"/>
                             <Button.Flyout>
-                                <MenuFlyout Placement="Right">
+                                <MenuFlyout FlyoutPresenterClasses="menuFlyout"
+                                            Placement="Right">
                                     <TextBox Watermark="Path to image" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
-
                         <Button
-                            Background="Transparent"
-                            CornerRadius="20"
-                            Height="66.125"
-                            Margin="44.6275"
-                            Padding="7"
-                            ToolTip.Tip="Filter"
-                            Width="66.125">
+                            Classes="menuButton"
+                            ToolTip.Tip="Filter">
                             <Image Source="/Assets/filterLight.png" />
                             <Button.Flyout>
-                                <MenuFlyout Placement="Right">
-                                    <MenuItem Header="Gaussian Blur" />
-                                    <MenuItem Header="Edges" />
-                                    <MenuItem Header="Darken" />
-                                    <MenuItem Header="Lighten" />
-                                    <MenuItem Header="Sharpen" />
+                                <MenuFlyout Placement="Right"
+                                            FlyoutPresenterClasses="menuFlyout">
+                                    
+                                    <MenuItem Classes="flyout"
+                                              Header="Gaussian Blur" />
+                                    <MenuItem  Classes="flyout"
+                                               Header="Edges" />
+                                    <MenuItem Classes="flyout"
+                                              Header="Darken" />
+                                    <MenuItem Classes="flyout"
+                                              Header="Lighten" />
+                                    <MenuItem Classes="flyout"
+                                              Header="Sharpen" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
                         <Button
-                            Background="Transparent"
-                            CornerRadius="20"
-                            Height="66.125"
-                            Margin="44.6275"
-                            Padding="7"
-                            ToolTip.Tip="Flip"
-                            Width="66.125">
+                            Classes="menuButton"
+                            ToolTip.Tip="Flip">
                             <Image Source="/Assets/flipLight.png" />
                             <Button.Flyout>
-                                <MenuFlyout Placement="Right">
-                                    <MenuItem Header="Vertical" />
-                                    <MenuItem Header="Horizontal" />
+                                <MenuFlyout Placement="Right"
+                                            FlyoutPresenterClasses="menuFlyout">
+                                    <MenuItem Classes="flyout"
+                                              Header="Vertical" />
+                                    <MenuItem Classes="flyout"
+                                              Header="Horizontal" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
                         <Button
-                            Background="Transparent"
-                            CornerRadius="20"
-                            Height="66.125"
-                            Margin="44.6275"
-                            Padding="7"
-                            ToolTip.Tip="Rotate"
-                            Width="66.125">
+                            Classes="menuButton"
+                            ToolTip.Tip="Rotate">
                             <Image Source="/Assets/rotateLight.png" />
                             <Button.Flyout>
-                                <MenuFlyout Placement="Right">
-                                    <MenuItem Header="Clockwise" />
-                                    <MenuItem Header="Counterclockwise" />
+                                <MenuFlyout Placement="Right"
+                                            FlyoutPresenterClasses="menuFlyout">
+                                    <MenuItem Classes="flyout"
+                                              Header="Clockwise" />
+                                    <MenuItem Classes="flyout"
+                                              Header="Counterclockwise" />
                                 </MenuFlyout>
                             </Button.Flyout>
                         </Button>
                         <Button
-                            Background="Transparent"
-                            CornerRadius="20"
-                            Height="66.125"
-                            Margin="44.6275"
-                            Padding="7"
-                            ToolTip.Tip="Save"
-                            Width="66.125">
+                            Classes="menuButton"
+                            ToolTip.Tip="Save">
                             <Image Source="/Assets/saveLight.png" />
                         </Button>
                     </StackPanel>
