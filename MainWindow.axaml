@@ -17,14 +17,14 @@
                 <ResourceDictionary x:Key="Light">
                     <SolidColorBrush x:Key="BackgroundBrush">#F3F3F3</SolidColorBrush>
                     <SolidColorBrush x:Key="PanelBrush">#FFFFFF</SolidColorBrush>
+                    <Color x:Key="BoxShadowBrush">#cccccc</Color>
                     <Image x:Key="GPUIcon" Source="/Assets/GPUModeDark.png" />
-                    <Color x:Key="ShadowColor">{Binding Color.FromRgb(204, 204, 204)}</Color>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="BackgroundBrush">#444444</SolidColorBrush>
                     <SolidColorBrush x:Key="PanelBrush">#0A0A0A</SolidColorBrush>
+                    <Color x:Key="BoxShadowBrush">Black</Color>
                     <Image x:Key="GPUIcon" Source="/Assets/GPUModeLight.png" />
-                    <Color x:Key="ShadowColor">" #0A0A0A"</Color>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
@@ -70,10 +70,7 @@
             <Setter Property="FontWeight"
                     Value="500" />
         </Style>
-        <Style Selector="BoxShadow.boxShadow">
-            <Setter Property="Color"
-                    Value="{DynamicResource ShadowColor}"/>
-        </Style>
+        
     </Window.Styles>
     
     <SplitView
@@ -86,12 +83,14 @@
                 <Panel Width="180">
                     <Border
                         Background="{DynamicResource PanelBrush}"
-                        BorderBrush="{DynamicResource PanelBrush}"
-                        BorderThickness="0.875"
-                        Classes="border"
+                        BorderThickness="0"
                         HorizontalAlignment="Left"
-                        Opacity="0.9"
-                        Width="165.38" />
+                        Opacity="0.8"
+                        Width="165.38" >
+                    <Border.Effect>
+                        <DropShadowEffect Color="{DynamicResource BoxShadowBrush}" OffsetX="0" OffsetY="0" BlurRadius="10"/>
+                     </Border.Effect>
+                    </Border>
                     <StackPanel HorizontalAlignment="Left">
                         <ToggleButton
                             Background="Transparent"
