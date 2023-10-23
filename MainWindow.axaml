@@ -37,10 +37,10 @@
         <Style Selector="Button.menuButton">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="CornerRadius" Value="20" />
-            <Setter Property="Height" Value="66.125" />
-            <Setter Property="Margin" Value="44.6275" />
+            <Setter Property="Height" Value="66" />
+            <Setter Property="Margin" Value="20" />
             <Setter Property="Padding" Value="7" />
-            <Setter Property="Width" Value="66.125" />
+            <Setter Property="Width" Value="66" />
         </Style>
         <Style Selector="MenuFlyoutPresenter.menuFlyout">
             <Setter Property="Background" Value="{DynamicResource MenuFlyoutBackgroundBrush}" />
@@ -49,6 +49,16 @@
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Margin" Value="54" />
             <Setter Property="MinWidth" Value="240" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+        <Style Selector="Border.test">
+            <Setter Property="Background" Value="{DynamicResource MenuFlyoutBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MenuFlyoutBorderBrush}" />
+            <Setter Property="CornerRadius" Value="0 10 10 0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Margin" Value="54" />
+            <Setter Property="MinWidth" Value="240" />
+            <Setter Property="MinHeight" Value="240" />
             <Setter Property="Opacity" Value="1" />
         </Style>
         <Style Selector="MenuItem.flyout">
@@ -75,13 +85,14 @@
         PaneBackground="Transparent">
         <SplitView.Pane>
             <Viewbox HorizontalAlignment="Left">
-                <Panel Width="180">
+                <Canvas Height="920" Width="180">
                     <Border
                         Background="{DynamicResource PanelBrush}"
                         BorderThickness="0"
-                        HorizontalAlignment="Left"
+                        Canvas.Left="0"
                         Opacity="0.8"
-                        Width="165.38">
+                        Height="920"
+                        Width="166">
                         <Border.Effect>
                             <DropShadowEffect
                                 BlurRadius="10"
@@ -90,29 +101,25 @@
                                 OffsetY="0" />
                         </Border.Effect>
                     </Border>
-                    <StackPanel HorizontalAlignment="Left">
+                    <StackPanel Spacing="43" Canvas.Left="31" Canvas.Top="31" Canvas.Bottom="31" Canvas.Right="31">
                         <ToggleButton
                             Background="Transparent"
                             Checked="SwitchToDarkTheme"
                             Content="{DynamicResource GPUIcon}"
                             CornerRadius="20"
-                            Height="95.25"
-                            Margin="31.065"
-                            Padding="7"
+                            Height="90"
+                            Margin="8"
+                            Padding="4"
                             ToolTip.ShowDelay="700"
                             ToolTip.Tip="GPU mode"
                             Unchecked="SwitchToLightTheme"
-                            Width="95.25" />
+                            Width="90" />
                         <Button
                             Classes="menuButton"
                             ToolTip.ShowDelay="700"
-                            ToolTip.Tip="Import">
+                            ToolTip.Tip="Import"
+                            Click="{ImportBorder.is}">
                             <Image Source="/Assets/importLight.png" />
-                            <Button.Flyout>
-                                <MenuFlyout FlyoutPresenterClasses="menuFlyout" Placement="Right">
-                                    <TextBox Watermark="Path to image" />
-                                </MenuFlyout>
-                            </Button.Flyout>
                         </Button>
                         <Button
                             Classes="menuButton"
@@ -161,9 +168,10 @@
                             <Image Source="/Assets/saveLight.png" />
                         </Button>
                     </StackPanel>
-                </Panel>
+                </Canvas>
             </Viewbox>
         </SplitView.Pane>
+        <Canvas>
         <Viewbox Stretch="UniformToFill" Width="1500">
             <Image
                 Height="1000"
@@ -171,6 +179,14 @@
                 Source="/Assets/ramin-talebi-rFRfxVM606s-unsplash 1.png"
                 Width="1000" />
         </Viewbox>
+            <Border Name="ImportBorder"
+                    IsVisible="False" 
+                    Canvas.Left="112"
+                    BorderThickness="0" 
+                    Canvas.Top="160"
+                    BoxShadow="2 4 9 -5 Black"
+                    Classes="test"> <TextBox Watermark="Path to image" /> </Border>
+        </Canvas>
 
     </SplitView>
 </Window>
