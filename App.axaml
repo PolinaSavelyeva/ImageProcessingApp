@@ -34,8 +34,8 @@
                     ChromeMedium="#fffbfbfb"
                     ChromeMediumLow="#fffcfcfc"
                     ChromeWhite="White"
-                    ListLow="#fffbfbfb"
-                    ListMedium="#fff7f7f7"
+                    ListLow="Transparent"
+                    ListMedium="Transparent"
                     RegionColor="#fff3f3f3"
                     x:Key="Light" />
                 <ColorPaletteResources
@@ -63,8 +63,8 @@
                     ChromeMedium="#99050505"
                     ChromeMediumLow="#33080808"
                     ChromeWhite="White"
-                    ListLow="#99050505"
-                    ListMedium="#000a0a0a"
+                    ListLow="Transparent"
+                    ListMedium="Transparent"
                     RegionColor="#ff444444"
                     x:Key="Dark" />
             </FluentTheme.Palettes>

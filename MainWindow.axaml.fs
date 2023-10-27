@@ -6,6 +6,7 @@ open Avalonia.Controls
 open Avalonia.Markup.Xaml
 open Avalonia.Interactivity
 open System.Diagnostics
+open Avalonia.Media
 open Avalonia.Styling
 open Avalonia.Themes.Fluent
 
@@ -21,6 +22,10 @@ type MainWindow () as this =
     member this.SwitchToLightTheme(source: obj, args: RoutedEventArgs) =
            
         this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Light) |> ignore
+        
+    member this.FlyoutPositionCalculate(borderWidth: double, buttonWidth:double, buttonMargin: double) =
+           
+        borderWidth/2. - buttonWidth/2. - buttonMargin
         
     member private this.InitializeComponent() =        
 #if DEBUG
