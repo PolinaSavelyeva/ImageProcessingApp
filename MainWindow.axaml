@@ -1,12 +1,15 @@
 <Window
     Icon="/Assets/logo.ico"
     Title="ImageProcessingApp"
+    WindowState="Maximized"
+    CanResize="True"
+    MinHeight="450"
+    MinWidth="900"
     d:DesignHeight="920"
     d:DesignWidth="1500"
     mc:Ignorable="d"
     x:Class="ImageProcessingApp.MainWindow"
     xmlns="https://github.com/avaloniaui"
-    xmlns:c="clr-namespace:CalcBinding;assembly=CalcBindingAva"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -359,7 +362,7 @@
 
         <Canvas>
             <Rectangle
-                Canvas.Left="160"
+                Margin="160 0 0 0"
                 Classes="rectangularWithShadow"
                 Height="920"
                 Width="10" />
