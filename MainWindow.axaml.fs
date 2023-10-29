@@ -17,13 +17,13 @@ type MainWindow() as this =
 
     let mutable temporaryImagePath = __SOURCE_DIRECTORY__ + "/Assets/Temporary/tmp.png"
     let mutable myImage = load temporaryImagePath
-    
+
     let device = ClDevice.GetFirstAppropriateDevice()
     let clContext = ClContext(device)
     let transformationsParserGPU = transformationsParserGPU clContext 64
-    
-    let processImage currentTheme (imageContainer:Image) (transformation: Transformations) =
-                
+
+    let processImage currentTheme (imageContainer: Image) (transformation: Transformations) =
+
         match currentTheme with
         | "Light" ->
             myImage <- myImage |> transformationsParserCPU transformation
@@ -35,49 +35,50 @@ type MainWindow() as this =
             save myImage temporaryImagePath
             imageContainer.Source <- new Bitmap(temporaryImagePath)
         |> ignore
-        
+
     do this.InitializeComponent()
 
     member this.SwitchThemes(source: obj, args: RoutedEventArgs) =
         match this.ActualThemeVariant.ToString() with
         | "Light" ->
             this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Dark)
-            
+
             let gpuModeOnBox =
-                    MessageBoxManager.GetMessageBoxStandard(
-                        "GPUNotification",
-                        "GPU mode on",
-                        MsBox.Avalonia.Enums.ButtonEnum.Ok
-                    )
+                MessageBoxManager.GetMessageBoxStandard(
+                    "GPUNotification",
+                    "GPU mode on",
+                    MsBox.Avalonia.Enums.ButtonEnum.Ok
+                )
 
             gpuModeOnBox.ShowAsPopupAsync(this) |> ignore
-        
+
         | "Dark" ->
             this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Light)
-            
+
             let gpuModeOffBox =
                 MessageBoxManager.GetMessageBoxStandard(
                     "GPUNotification",
                     "GPU mode off",
                     MsBox.Avalonia.Enums.ButtonEnum.Ok
                 )
+
             gpuModeOffBox.ShowAsPopupAsync(this) |> ignore
         |> ignore
-        
+
     member this.ButtonWithInputBorderClick(source: obj, args: RoutedEventArgs) =
-         
-         let saveBorder = this.FindControl<Border>("SaveBorder")
-         let importBorder = this.FindControl<Border>("ImportBorder")
-         
-         let _inner (currentBorder: Border) (anotherBorder: Border) =
-                currentBorder.IsVisible <- not currentBorder.IsVisible
-                anotherBorder.IsVisible <- false
-         
-         match source with
-         | :? Button as button ->
-             match button.Name with
-             | "ImportButton" -> _inner importBorder saveBorder                 
-             | "SaveButton" -> _inner saveBorder importBorder
+
+        let saveBorder = this.FindControl<Border>("SaveBorder")
+        let importBorder = this.FindControl<Border>("ImportBorder")
+
+        let _inner (currentBorder: Border) (anotherBorder: Border) =
+            currentBorder.IsVisible <- not currentBorder.IsVisible
+            anotherBorder.IsVisible <- false
+
+        match source with
+        | :? Button as button ->
+            match button.Name with
+            | "ImportButton" -> _inner importBorder saveBorder
+            | "SaveButton" -> _inner saveBorder importBorder
 
     member this.ClickOnBorder(source: obj, args: Avalonia.Input.TappedEventArgs) =
         let importBorder = this.FindControl<Border>("ImportBorder")
@@ -85,7 +86,7 @@ type MainWindow() as this =
 
         importBorder.IsVisible <- false
         saveBorder.IsVisible <- false
-        
+
     member this.ClickOnAnotherButton(source: obj, args: RoutedEventArgs) =
         let importBorder = this.FindControl<Border>("ImportBorder")
         let saveBorder = this.FindControl<Border>("SaveBorder")
@@ -140,15 +141,15 @@ type MainWindow() as this =
     member this.Process(source: obj, args: RoutedEventArgs) =
         let imageContainer = this.FindControl<Image>("Image")
         let processImage = processImage (this.ActualThemeVariant.ToString()) imageContainer
-        
+
         match source with
         | :? MenuItem as item ->
             match item.Name with
-            | "GaussianBlur" ->  processImage Gauss
+            | "GaussianBlur" -> processImage Gauss
             | "Edges" -> processImage Edges
             | "Darken" -> processImage Darken
             | "Lighten" -> processImage Lighten
-            | "Sharpen" ->  processImage Sharpen
+            | "Sharpen" -> processImage Sharpen
             | "VerticalFlip" -> processImage FlipV
             | "HorizontalFlip" -> processImage FlipH
             | "ClockwiseRotate" -> processImage RotationR

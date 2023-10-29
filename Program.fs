@@ -18,5 +18,5 @@ module Program =
         let temporaryImagePath = __SOURCE_DIRECTORY__ + "/Assets/Temporary/tmp.png"
         IO.File.Delete(temporaryImagePath)
         IO.File.Copy(__SOURCE_DIRECTORY__ + "/Assets/Temporary/main.png", temporaryImagePath)
-        
+
         buildImageProcessingApp().StartWithClassicDesktopLifetime(argv)
