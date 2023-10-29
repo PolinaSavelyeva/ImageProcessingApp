@@ -24,6 +24,7 @@
                     <SolidColorBrush x:Key="PanelBrush">#FFFFFF</SolidColorBrush>
                     <SolidColorBrush x:Key="StandardThemeBrush">White</SolidColorBrush>
                     <SolidColorBrush x:Key="ReverseStandardThemeBrush">Black</SolidColorBrush>
+                    <SolidColorBrush x:Key="OpenButtonBrush">#f7f7f7</SolidColorBrush>
                     <Color x:Key="BoxShadowBrush">#ccc8c8</Color>
                     <Image Source="/Assets/GPUModeDark.png" x:Key="GPUIcon" />
                 </ResourceDictionary>
@@ -32,6 +33,7 @@
                     <SolidColorBrush x:Key="PanelBrush">#0A0A0A</SolidColorBrush>
                     <SolidColorBrush x:Key="StandardThemeBrush">Black</SolidColorBrush>
                     <SolidColorBrush x:Key="ReverseStandardThemeBrush">White</SolidColorBrush>
+                    <SolidColorBrush x:Key="OpenButtonBrush">Black</SolidColorBrush>
                     <Color x:Key="BoxShadowBrush">#232323</Color>
                     <Image Source="/Assets/GPUModeLight.png" x:Key="GPUIcon" />
                 </ResourceDictionary>
@@ -55,7 +57,7 @@
         </Style>
         <Style Selector="Border.inputBorder">
             <Setter Property="Background" Value="{DynamicResource StandardThemeBrush}" />
-            <Setter Property="CornerRadius" Value="20 20 20 20" />
+            <Setter Property="CornerRadius" Value="2" />
             <Setter Property="Width" Value="500" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Padding" Value="10" />
@@ -153,9 +155,7 @@
             IsPaneOpen="True"
             PaneBackground="Transparent">
             <SplitView.Pane>
-
                 <Canvas HorizontalAlignment="Left" MaxWidth="180">
-
                     <Rectangle
                         Classes="rectangularWithShadow"
                         Height="2100"
@@ -182,35 +182,26 @@
                             Canvas.Right="31"
                             Canvas.Top="31"
                             Spacing="43">
-
                             <ToggleButton
                                 Background="Transparent"
-                                Checked="SwitchToDarkTheme"
                                 Click="ClickOnAnotherButton"
                                 Content="{DynamicResource GPUIcon}"
                                 CornerRadius="20"
                                 Height="90"
+                                IsCheckedChanged="SwitchThemes"
                                 Margin="8"
+                                Name="GPUMode"
                                 Padding="4"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="GPU mode"
-                                Unchecked="SwitchToLightTheme"
                                 Width="90" />
                             <Button
                                 Classes="menuToggleButton"
-                                Click="ImportButtonClicked"
+                                Click="ImportButtonClick"
                                 Name="ImportButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Import">
                                 <Image Source="/Assets/importLight.png" />
-                                <!-- <Button.Flyout> -->
-                                <!--  <Flyout  -->
-                                <!--  FlyoutPresenterClasses="flyout"  -->
-                                <!--  HorizontalOffset="667"  -->
-                                <!--  VerticalOffset="142">  -->
-                                <!--         <TextBox Watermark="Full path to upload image" /> -->
-                                <!--     </Flyout> -->
-                                <!-- </Button.Flyout> -->
                             </Button>
                             <Button
                                 Classes="menuToggleButton"
@@ -313,7 +304,7 @@
                             </Button>
                             <Button
                                 Classes="menuToggleButton"
-                                Click="SaveButtonClicked"
+                                Click="SaveButtonClick"
                                 Name="SaveButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Save">
@@ -323,15 +314,12 @@
                     </Canvas>
                 </Canvas>
             </SplitView.Pane>
-
             <Panel Height="920" Width="1500">
                 <Viewbox Stretch="Uniform">
                     <Image Name="Image" />
                 </Viewbox>
-
             </Panel>
         </SplitView>
-
         <Canvas>
             <Border
                 Background="Transparent"
@@ -342,21 +330,28 @@
                 VerticalAlignment="Center"
                 Width="2100" />
         </Canvas>
-
         <Border
             Classes="inputBorder"
             HorizontalAlignment="Center"
-            IsVisible="True"
+            IsVisible="False"
             Name="ImportBorder"
             VerticalAlignment="Center">
             <StackPanel Spacing="10">
-                <TextBox Name="Path" Watermark="Full path to directory to import image" />
-                <Button
-                    Background="Transparent"
-                    Click="ImportImage"
-                    HorizontalAlignment="Center">
-                    Open
-                </Button>
+                <TextBox Name="PathToImport" Watermark="Full path to directory to import image" />
+                <Border
+                    Background="{DynamicResource OpenButtonBrush}"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,20,0">
+                    <Button
+                        Background="Transparent"
+                        Click="ImportImage"
+                        FontSize="16"
+                        FontWeight="Light"
+                        Foreground="{DynamicResource ReverseStandardThemeBrush}"
+                        HorizontalAlignment="Right">
+                        Open
+                    </Button>
+                </Border>
             </StackPanel>
         </Border>
         <Border
@@ -365,7 +360,23 @@
             IsVisible="false"
             Name="SaveBorder"
             VerticalAlignment="Center">
-            <TextBox Watermark="Full path to save the image" />
+            <StackPanel Spacing="10">
+                <TextBox Name="PathToSave" Watermark="Full path to save the image" />
+                <Border
+                    Background="{DynamicResource OpenButtonBrush}"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,20,0">
+                    <Button
+                        Background="Transparent"
+                        Click="SaveImage"
+                        FontSize="16"
+                        FontWeight="Light"
+                        Foreground="{DynamicResource ReverseStandardThemeBrush}"
+                        HorizontalAlignment="Right">
+                        Save
+                    </Button>
+                </Border>
+            </StackPanel>
         </Border>
         <!--  <Border  -->
         <!--  Classes="notificationBorder"  -->

@@ -1,44 +1,40 @@
 namespace ImageProcessingApp
 
-open System
 open Avalonia
 open Avalonia.Controls
+open Avalonia.Controls.Primitives
 open Avalonia.Markup.Xaml
 open Avalonia.Interactivity
-open System.Diagnostics
 open Avalonia.Styling
 open System.IO
 open MsBox.Avalonia
 open Avalonia.Media.Imaging
-open MsBox.Avalonia.Models
 
 type MainWindow () as this = 
     inherit Window ()
     
     do this.InitializeComponent()    
-      
-    member this.SwitchToDarkTheme(source: obj, args: RoutedEventArgs) =
-        
-        this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Dark) |> ignore
-        
-    member this.SwitchToLightTheme(source: obj, args: RoutedEventArgs) =
-           
-        this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Light) |> ignore
     
-    member this.ImportButtonClicked(source: obj, args: RoutedEventArgs) =
+    member this.SwitchThemes(source: obj, args: RoutedEventArgs) =
+       match this.ActualThemeVariant.ToString() with
+         | "Light" -> this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Dark)
+         | "Dark" -> this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Light) 
+       |> ignore
+           
+    member this.ImportButtonClick(source: obj, args: RoutedEventArgs) =
         let importBorder = this.FindControl<Border>("ImportBorder")
         let saveBorder =  this.FindControl<Border>("SaveBorder")
-        
+       
         importBorder.IsVisible <- not importBorder.IsVisible
         saveBorder.IsVisible <- false
     
-    member this.SaveButtonClicked(source: obj, args: RoutedEventArgs) =
+    member this.SaveButtonClick(source: obj, args: RoutedEventArgs) =
         let importBorder = this.FindControl<Border>("ImportBorder")
         let saveBorder =  this.FindControl<Border>("SaveBorder")
-        
+       
         importBorder.IsVisible <- false
         saveBorder.IsVisible <- not saveBorder.IsVisible
-    
+
     member this.ClickOnBorder (source: obj, args: Avalonia.Input.TappedEventArgs) =
         let importBorder = this.FindControl<Border>("ImportBorder")
         let saveBorder =  this.FindControl<Border>("SaveBorder")
@@ -54,18 +50,29 @@ type MainWindow () as this =
         saveBorder.IsVisible <- false
     
     member this.ImportImage (source: obj, args: RoutedEventArgs) =
-        let image = this.FindControl<Image>("Image")
-        let imagePath = this.FindControl<TextBox>("Path").Text
+        let imageContainer = this.FindControl<Image>("Image")
+        let pathToImportImage = this.FindControl<TextBox>("PathToImport").Text
         let window = this.FindControl<Window>("MainWindow")
+         
+        let incorrectPathBox = MessageBoxManager.GetMessageBoxStandard("ImportCaption", "Incorrect path to import image", MsBox.Avalonia.Enums.ButtonEnum.Ok)
         
-        let incorrectPathBox = MessageBoxManager.GetMessageBoxStandard("Caption", "Incorrect path to image", MsBox.Avalonia.Enums.ButtonEnum.Ok)
-
-        if File.Exists(imagePath) then
-            let bitmap = new Bitmap(imagePath)
-            image.Source <- bitmap
+        if File.Exists(pathToImportImage) then
+            let bitmap = new Bitmap(pathToImportImage)
+            imageContainer.Source <- bitmap
         else
             incorrectPathBox.ShowAsPopupAsync(window) |> ignore
+    
+    member this.SaveImage (source: obj, args: RoutedEventArgs) =
+        let imageContainer = this.FindControl<Image>("Image")
+        let pathToSaveImage = this.FindControl<TextBox>("PathToSave").Text
+        let window = this.FindControl<Window>("MainWindow")
         
+        let incorrectPathBox = MessageBoxManager.GetMessageBoxStandard("SaveCaption", "Incorrect path to save image", MsBox.Avalonia.Enums.ButtonEnum.Ok)
+
+        if File.Exists(pathToSaveImage) then
+            ()
+        else
+            incorrectPathBox.ShowAsPopupAsync(window) |> ignore    
         
     member private this.InitializeComponent() =        
 #if DEBUG
