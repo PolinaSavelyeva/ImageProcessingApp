@@ -5,8 +5,8 @@ open Avalonia
 
 module Program =
 
-    [<CompiledName "BuildAvaloniaApp">] 
-    let buildImageProcessingApp () = 
+    [<CompiledName "BuildAvaloniaApp">]
+    let buildImageProcessingApp () =
         AppBuilder
             .Configure<App>()
             .UsePlatformDetect()

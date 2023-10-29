@@ -194,7 +194,7 @@
                                 Width="90" />
                             <Button
                                 Classes="menuToggleButton"
-                                Click="ImportButtonClick"
+                                Click="ButtonWithInputBorderClick"
                                 Name="ImportButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Import">
@@ -331,7 +331,7 @@
                             </Button>
                             <Button
                                 Classes="menuToggleButton"
-                                Click="SaveButtonClick"
+                                Click="ButtonWithInputBorderClick"
                                 Name="SaveButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Save">
