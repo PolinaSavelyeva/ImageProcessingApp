@@ -3,8 +3,8 @@ namespace ImageProcessingApp
 open Avalonia
 open Avalonia.Controls
 open Brahma.FSharp
-open ImageProcessing
 open ImageProcessing.MyImage
+open ImageProcessing.Process
 open Avalonia.Markup.Xaml
 open Avalonia.Interactivity
 open Avalonia.Styling
@@ -16,24 +16,54 @@ type MainWindow() as this =
     inherit Window()
 
     let mutable temporaryImagePath = __SOURCE_DIRECTORY__ + "/Assets/Temporary/tmp.png"
-    let device = Brahma.FSharp.ClDevice.GetFirstAppropriateDevice()
-    let clContext = Brahma.FSharp.ClContext(device)
-    let applyFilterGPU = GPU.applyFilter clContext 64
-    let rotateGPU = GPU.rotate clContext 64
-    let flipGPU = GPU.flip clContext 64
+    let mutable myImage = load temporaryImagePath
     
-    let dependsOnThemeDo expressionWhenLightTheme expressionWhenDarkTheme =
-        match this.ActualThemeVariant.ToString() with
-        | "Light" -> expressionWhenLightTheme
-        | "Dark" -> expressionWhenDarkTheme
+    let device = ClDevice.GetFirstAppropriateDevice()
+    let clContext = ClContext(device)
+    let transformationsParserGPU = transformationsParserGPU clContext 64
     
+    let processImage currentTheme (imageContainer:Image) (transformation: Transformations) =
+                
+        match currentTheme with
+        | "Light" ->
+            myImage <- myImage |> transformationsParserCPU transformation
+            save myImage temporaryImagePath
+            imageContainer.Source <- new Bitmap(temporaryImagePath)
+
+        | "Dark" ->
+            myImage <- myImage |> transformationsParserGPU transformation
+            save myImage temporaryImagePath
+            imageContainer.Source <- new Bitmap(temporaryImagePath)
+        |> ignore
+        
     do this.InitializeComponent()
 
     member this.SwitchThemes(source: obj, args: RoutedEventArgs) =
         match this.ActualThemeVariant.ToString() with
-        | "Light" -> this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Dark)
-        | "Dark" -> this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Light)
+        | "Light" ->
+            this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Dark)
+            
+            let gpuModeOnBox =
+                    MessageBoxManager.GetMessageBoxStandard(
+                        "GPUNotification",
+                        "GPU mode on",
+                        MsBox.Avalonia.Enums.ButtonEnum.Ok
+                    )
+
+            gpuModeOnBox.ShowAsPopupAsync(this) |> ignore
+        
+        | "Dark" ->
+            this.SetValue<ThemeVariant>(Application.RequestedThemeVariantProperty, ThemeVariant.Light)
+            
+            let gpuModeOffBox =
+                MessageBoxManager.GetMessageBoxStandard(
+                    "GPUNotification",
+                    "GPU mode off",
+                    MsBox.Avalonia.Enums.ButtonEnum.Ok
+                )
+            gpuModeOffBox.ShowAsPopupAsync(this) |> ignore
         |> ignore
+        
     member this.ButtonWithInputBorderClick(source: obj, args: RoutedEventArgs) =
          
          let saveBorder = this.FindControl<Border>("SaveBorder")
@@ -55,7 +85,7 @@ type MainWindow() as this =
 
         importBorder.IsVisible <- false
         saveBorder.IsVisible <- false
-
+        
     member this.ClickOnAnotherButton(source: obj, args: RoutedEventArgs) =
         let importBorder = this.FindControl<Border>("ImportBorder")
         let saveBorder = this.FindControl<Border>("SaveBorder")
@@ -66,11 +96,10 @@ type MainWindow() as this =
     member this.ImportImage(source: obj, args: RoutedEventArgs) =
         let imageContainer = this.FindControl<Image>("Image")
         let pathToImportImage = this.FindControl<TextBox>("PathToImport").Text
-        let window = this.FindControl<Window>("MainWindow")
 
         if File.Exists pathToImportImage then
             try
-                let myImage = load pathToImportImage
+                myImage <- load pathToImportImage
 
                 temporaryImagePath <-
                     __SOURCE_DIRECTORY__
@@ -79,8 +108,7 @@ type MainWindow() as this =
 
                 save myImage temporaryImagePath
 
-                let bitmap = new Bitmap(pathToImportImage)
-                imageContainer.Source <- bitmap
+                imageContainer.Source <- new Bitmap(pathToImportImage)
 
                 let importingWasSucceedBox =
                     MessageBoxManager.GetMessageBoxStandard(
@@ -89,8 +117,8 @@ type MainWindow() as this =
                         MsBox.Avalonia.Enums.ButtonEnum.Ok
                     )
 
-                importingWasSucceedBox.ShowAsPopupAsync(window) |> ignore
-            with :? System.Exception as ex ->
+                importingWasSucceedBox.ShowAsPopupAsync(this) |> ignore
+            with ex ->
                 let importingWasFailedBox =
                     MessageBoxManager.GetMessageBoxStandard(
                         "ImportNotification",
@@ -98,7 +126,7 @@ type MainWindow() as this =
                         MsBox.Avalonia.Enums.ButtonEnum.Ok
                     )
 
-                importingWasFailedBox.ShowAsPopupAsync(window) |> ignore
+                importingWasFailedBox.ShowAsPopupAsync(this) |> ignore
         else
             let incorrectPathBox =
                 MessageBoxManager.GetMessageBoxStandard(
@@ -107,200 +135,27 @@ type MainWindow() as this =
                     MsBox.Avalonia.Enums.ButtonEnum.Ok
                 )
 
-            incorrectPathBox.ShowAsPopupAsync(window) |> ignore
+            incorrectPathBox.ShowAsPopupAsync(this) |> ignore
 
-    member this.GaussFilter(source: obj, args: RoutedEventArgs) =
+    member this.Process(source: obj, args: RoutedEventArgs) =
         let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.applyFilter Kernels.gaussianBlurKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = applyFilterGPU Kernels.gaussianBlurKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.EdgesFilter(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.applyFilter Kernels.edgesKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = applyFilterGPU Kernels.edgesKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.DarkenFilter(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.applyFilter Kernels.darkenKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = applyFilterGPU Kernels.darkenKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.LightenFilter(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.applyFilter Kernels.lightenKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = applyFilterGPU Kernels.lightenKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.SharpenFilter(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.applyFilter Kernels.sharpenKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = applyFilterGPU Kernels.sharpenKernel myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.VerticalFlip(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.flip true myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = flipGPU true myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.HorizontalFlip(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.flip false myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = flipGPU false myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.ClockwiseRotate(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.rotate true myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = rotateGPU true myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
-
-    member this.CounterclockwiseRotate(source: obj, args: RoutedEventArgs) =
-        let imageContainer = this.FindControl<Image>("Image")
-
-        match this.ActualThemeVariant.ToString() with
-        | "Light" ->
-            let myImage = load temporaryImagePath
-            let newImage = CPU.rotate false myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-
-        | "Dark" ->
-            let myImage = load temporaryImagePath
-            let newImage = rotateGPU false myImage
-            save newImage temporaryImagePath
-
-            let bitmap = new Bitmap(temporaryImagePath)
-            imageContainer.Source <- bitmap
-        |> ignore
+        let processImage = processImage (this.ActualThemeVariant.ToString()) imageContainer
+        
+        match source with
+        | :? MenuItem as item ->
+            match item.Name with
+            | "GaussianBlur" ->  processImage Gauss
+            | "Edges" -> processImage Edges
+            | "Darken" -> processImage Darken
+            | "Lighten" -> processImage Lighten
+            | "Sharpen" ->  processImage Sharpen
+            | "VerticalFlip" -> processImage FlipV
+            | "HorizontalFlip" -> processImage FlipH
+            | "ClockwiseRotate" -> processImage RotationR
+            | "CounterclockwiseRotate" -> processImage RotationL
 
     member this.SaveImage(source: obj, args: RoutedEventArgs) =
         let pathToSaveImage = this.FindControl<TextBox>("PathToSave").Text
-        let window = this.FindControl<Window>("MainWindow")
 
         if Directory.Exists(Path.GetDirectoryName pathToSaveImage) then
             try
@@ -313,7 +168,7 @@ type MainWindow() as this =
                         MsBox.Avalonia.Enums.ButtonEnum.Ok
                     )
 
-                savingWasSucceedBox.ShowAsPopupAsync(window) |> ignore
+                savingWasSucceedBox.ShowAsPopupAsync(this) |> ignore
             with :? System.Exception as ex ->
                 let savingWasFailedBox =
                     MessageBoxManager.GetMessageBoxStandard(
@@ -322,7 +177,7 @@ type MainWindow() as this =
                         MsBox.Avalonia.Enums.ButtonEnum.Ok
                     )
 
-                savingWasFailedBox.ShowAsPopupAsync(window) |> ignore
+                savingWasFailedBox.ShowAsPopupAsync(this) |> ignore
         else
             let pathWasIncorrectBox =
                 MessageBoxManager.GetMessageBoxStandard(
@@ -331,7 +186,7 @@ type MainWindow() as this =
                     MsBox.Avalonia.Enums.ButtonEnum.Ok
                 )
 
-            pathWasIncorrectBox.ShowAsPopupAsync(window) |> ignore
+            pathWasIncorrectBox.ShowAsPopupAsync(this) |> ignore
 
     member private this.InitializeComponent() =
 #if DEBUG

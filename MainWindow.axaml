@@ -63,15 +63,6 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Padding" Value="10" />
         </Style>
-        <Style Selector="Border.notificationBorder">
-            <Setter Property="Background" Value="#adadad" />
-            <Setter Property="Opacity" Value="0.9" />
-            <Setter Property="CornerRadius" Value="20 20 20 20" />
-            <Setter Property="Width" Value="327" />
-            <Setter Property="Height" Value="65" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="10" />
-        </Style>
         <Style Selector="Border.menuBorder">
             <Setter Property="MinWidth" Value="250" />
             <Setter Property="Background" Value="{DynamicResource StandardThemeBrush}" />
@@ -222,24 +213,29 @@
                                                 <StackPanel>
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="GaussFilter"
-                                                        Header="Gaussian Blur" />
+                                                        Click="Process"
+                                                        Header="Gaussian Blur"
+                                                        Name="GaussianBlur" />
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="EdgesFilter"
-                                                        Header="Edges" />
+                                                        Click="Process"
+                                                        Header="Edges"
+                                                        Name="Edges" />
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="DarkenFilter"
-                                                        Header="Darken" />
+                                                        Click="Process"
+                                                        Header="Darken"
+                                                        Name="Darken" />
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="LightenFilter"
-                                                        Header="Lighten" />
+                                                        Click="Process"
+                                                        Header="Lighten"
+                                                        Name="Lighten" />
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="SharpenFilter"
-                                                        Header="Sharpen" />
+                                                        Click="Process"
+                                                        Header="Sharpen"
+                                                        Name="Sharpen" />
                                                 </StackPanel>
                                             </Border>
                                             <Rectangle
@@ -273,12 +269,14 @@
                                                 <StackPanel>
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="VerticalFlip"
-                                                        Header="Vertical" />
+                                                        Click="Process"
+                                                        Header="Vertical"
+                                                        Name="VerticalFlip" />
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="HorizontalFlip"
-                                                        Header="Horizontal" />
+                                                        Click="Process"
+                                                        Header="Horizontal"
+                                                        Name="HorizontalFlip" />
                                                 </StackPanel>
                                             </Border>
                                             <Rectangle
@@ -312,12 +310,14 @@
                                                 <StackPanel>
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="ClockwiseRotate"
-                                                        Header="Clockwise" />
+                                                        Click="Process"
+                                                        Header="Clockwise"
+                                                        Name="ClockwiseRotate" />
                                                     <MenuItem
                                                         Classes="flyoutItem"
-                                                        Click="CounterclockwiseRotate"
-                                                        Header="Counterclockwise" />
+                                                        Click="Process"
+                                                        Header="Counterclockwise"
+                                                        Name="CounterclockwiseRotate" />
                                                 </StackPanel>
                                             </Border>
                                             <Rectangle
@@ -419,22 +419,5 @@
                 </Border>
             </StackPanel>
         </Border>
-        <!--  <Border  -->
-        <!--  Classes="notificationBorder"  -->
-        <!--  HorizontalAlignment="Center"  -->
-        <!--  IsVisible="False"  -->
-        <!--  Name="NotificationGPUModeOn"  -->
-        <!--  VerticalAlignment="Center">  -->
-        <!--     <TextBlock>GPU mode on</TextBlock> -->
-        <!-- </Border> -->
-        <!--  <Border  -->
-        <!--  Classes="notificationBorder"  -->
-        <!--  HorizontalAlignment="Center"  -->
-        <!--  IsVisible="False"  -->
-        <!--  Name="NotificationGPUModeOff"  -->
-        <!--  VerticalAlignment="Center">  -->
-        <!--     <TextBlock>GPU mode off</TextBlock> -->
-        <!-- </Border> -->
-
     </Panel>
 </Window>
