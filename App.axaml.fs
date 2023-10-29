@@ -15,5 +15,4 @@ type App() =
         | :? IClassicDesktopStyleApplicationLifetime as desktop ->
              desktop.MainWindow <- MainWindow()
         | _ -> ()
-
         base.OnFrameworkInitializationCompleted()

@@ -1,5 +1,5 @@
 <Window
-    Icon="/Assets/logo.ico"
+    Icon="/Assets/Icons/logo.ico"
     MaxHeight="2100"
     MaxWidth="2100"
     MinHeight="450"
@@ -14,6 +14,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:paz="using:Avalonia.Controls.PanAndZoom"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Window.Resources>
@@ -26,7 +27,7 @@
                     <SolidColorBrush x:Key="ReverseStandardThemeBrush">Black</SolidColorBrush>
                     <SolidColorBrush x:Key="OpenButtonBrush">#f7f7f7</SolidColorBrush>
                     <Color x:Key="BoxShadowBrush">#ccc8c8</Color>
-                    <Image Source="/Assets/GPUModeDark.png" x:Key="GPUIcon" />
+                    <Image Source="/Assets/Icons/GPUModeDark.png" x:Key="GPUIcon" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="BackgroundBrush">#444444</SolidColorBrush>
@@ -35,7 +36,7 @@
                     <SolidColorBrush x:Key="ReverseStandardThemeBrush">White</SolidColorBrush>
                     <SolidColorBrush x:Key="OpenButtonBrush">Black</SolidColorBrush>
                     <Color x:Key="BoxShadowBrush">#232323</Color>
-                    <Image Source="/Assets/GPUModeLight.png" x:Key="GPUIcon" />
+                    <Image Source="/Assets/Icons/GPUModeLight.png" x:Key="GPUIcon" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
             <LinearGradientBrush EndPoint="100%,100%" StartPoint="0%,100%" x:Key="ShadowLinearGradientBrush">
@@ -151,16 +152,12 @@
     <Panel>
         <SplitView
             Background="{DynamicResource BackgroundBrush}"
-            DisplayMode="Overlay"
+            DisplayMode="Inline"
             IsPaneOpen="True"
+            OpenPaneLength="166"
             PaneBackground="Transparent">
             <SplitView.Pane>
                 <Canvas HorizontalAlignment="Left" MaxWidth="180">
-                    <Rectangle
-                        Classes="rectangularWithShadow"
-                        Height="2100"
-                        Margin="160,0,0,0"
-                        Width="10" />
                     <Border
                         Background="{DynamicResource PanelBrush}"
                         BorderThickness="0"
@@ -201,7 +198,7 @@
                                 Name="ImportButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Import">
-                                <Image Source="/Assets/importLight.png" />
+                                <Image Source="/Assets/Icons/importLight.png" />
                             </Button>
                             <Button
                                 Classes="menuToggleButton"
@@ -209,11 +206,11 @@
                                 Name="FilterButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Filter">
-                                <Image Source="/Assets/filterLight.png" />
+                                <Image Source="/Assets/Icons/filterLight.png" />
                                 <Button.Flyout>
                                     <MenuFlyout
                                         FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.4"
+                                        HorizontalOffset="28.7"
                                         Placement="Right"
                                         VerticalOffset="100">
                                         <Panel>
@@ -223,16 +220,32 @@
                                                 Name="FilterBorder"
                                                 VerticalAlignment="Center">
                                                 <StackPanel>
-                                                    <MenuItem Classes="flyoutItem" Header="Gaussian Blur" />
-                                                    <MenuItem Classes="flyoutItem" Header="Edges" />
-                                                    <MenuItem Classes="flyoutItem" Header="Darken" />
-                                                    <MenuItem Classes="flyoutItem" Header="Lighten" />
-                                                    <MenuItem Classes="flyoutItem" Header="Sharpen" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="GaussFilter"
+                                                        Header="Gaussian Blur" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="EdgesFilter"
+                                                        Header="Edges" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="DarkenFilter"
+                                                        Header="Darken" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="LightenFilter"
+                                                        Header="Lighten" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="SharpenFilter"
+                                                        Header="Sharpen" />
                                                 </StackPanel>
                                             </Border>
                                             <Rectangle
                                                 Classes="rectangularWithShadow"
                                                 Height="{Binding #FilterBorder.Height}"
+                                                Opacity="0.6"
                                                 Width="2" />
                                         </Panel>
                                     </MenuFlyout>
@@ -244,11 +257,11 @@
                                 Name="FlipButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Flip">
-                                <Image Source="/Assets/flipLight.png" />
+                                <Image Source="/Assets/Icons/flipLight.png" />
                                 <Button.Flyout>
                                     <MenuFlyout
                                         FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.4"
+                                        HorizontalOffset="28.7"
                                         Placement="Right"
                                         VerticalOffset="25">
                                         <Panel>
@@ -258,13 +271,20 @@
                                                 Name="FlipBorder"
                                                 VerticalAlignment="Center">
                                                 <StackPanel>
-                                                    <MenuItem Classes="flyoutItem" Header="Vertical" />
-                                                    <MenuItem Classes="flyoutItem" Header="Horizontal" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="VerticalFlip"
+                                                        Header="Vertical" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="HorizontalFlip"
+                                                        Header="Horizontal" />
                                                 </StackPanel>
                                             </Border>
                                             <Rectangle
                                                 Classes="rectangularWithShadow"
                                                 Height="{Binding #FlipBorder.Height}"
+                                                Opacity="0.6"
                                                 Width="2" />
                                         </Panel>
                                     </MenuFlyout>
@@ -276,11 +296,11 @@
                                 Name="RotateButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Rotate">
-                                <Image Source="/Assets/rotateLight.png" />
+                                <Image Source="/Assets/Icons/rotateLight.png" />
                                 <Button.Flyout>
                                     <MenuFlyout
                                         FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.4"
+                                        HorizontalOffset="28.7"
                                         Placement="Right"
                                         VerticalOffset="25">
                                         <Panel>
@@ -290,13 +310,20 @@
                                                 Name="RotateBorder"
                                                 VerticalAlignment="Center">
                                                 <StackPanel>
-                                                    <MenuItem Classes="flyoutItem" Header="Clockwise" />
-                                                    <MenuItem Classes="flyoutItem" Header="Counterclockwise" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="ClockwiseRotate"
+                                                        Header="Clockwise" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="CounterclockwiseRotate"
+                                                        Header="Counterclockwise" />
                                                 </StackPanel>
                                             </Border>
                                             <Rectangle
                                                 Classes="rectangularWithShadow"
                                                 Height="{Binding #RotateBorder.Height}"
+                                                Opacity="0.6"
                                                 Width="2" />
                                         </Panel>
                                     </MenuFlyout>
@@ -308,28 +335,42 @@
                                 Name="SaveButton"
                                 ToolTip.ShowDelay="700"
                                 ToolTip.Tip="Save">
-                                <Image Source="/Assets/saveLight.png" />
+                                <Image Source="/Assets/Icons/saveLight.png" />
                             </Button>
                         </StackPanel>
                     </Canvas>
                 </Canvas>
             </SplitView.Pane>
-            <Panel Height="920" Width="1500">
-                <Viewbox Stretch="Uniform">
-                    <Image Name="Image" />
-                </Viewbox>
+            <Panel
+                Background="Transparent"
+                Height="2100"
+                Width="2100">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                    <paz:ZoomBorder
+                        Background="Transparent"
+                        ClipToBounds="True"
+                        Focusable="True"
+                        HorizontalAlignment="Stretch"
+                        Stretch="None"
+                        Tapped="ClickOnBorder"
+                        VerticalAlignment="Stretch"
+                        ZoomSpeed="1.4">
+
+                        <Image
+                            Height="920"
+                            Name="Image"
+                            Source="Assets/Temporary/main.png"
+                            Width="1500" />
+                    </paz:ZoomBorder>
+                </ScrollViewer>
             </Panel>
         </SplitView>
-        <Canvas>
-            <Border
-                Background="Transparent"
-                Canvas.Left="166"
-                Height="2100"
-                HorizontalAlignment="Center"
-                Tapped="ClickOnBorder"
-                VerticalAlignment="Center"
-                Width="2100" />
-        </Canvas>
+        <Rectangle
+            Classes="rectangularWithShadow"
+            Height="2100"
+            Margin="166,0,0,0"
+            Opacity="0.6"
+            Width="5" />
         <Border
             Classes="inputBorder"
             HorizontalAlignment="Center"
