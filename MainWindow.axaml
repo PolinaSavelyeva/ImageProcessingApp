@@ -148,198 +148,204 @@
             OpenPaneLength="166"
             PaneBackground="Transparent">
             <SplitView.Pane>
-                <Canvas HorizontalAlignment="Left" MaxWidth="180">
-                    <Border
-                        Background="{DynamicResource PanelBrush}"
-                        BorderThickness="0"
-                        Height="2100"
-                        Name="LeftBorder"
-                        Opacity="0.95"
-                        Width="166" />
-                    <Canvas>
+                <Viewbox
+                    HorizontalAlignment="Left"
+                    MaxHeight="920"
+                    VerticalAlignment="Stretch"
+                    Width="180">
+                    <Canvas Height="920" Width="180">
                         <Border
-                            Background="Transparent"
+                            Background="{DynamicResource PanelBrush}"
+                            BorderThickness="0"
                             Height="2100"
-                            HorizontalAlignment="Center"
-                            Tapped="ClickOnBorder"
-                            VerticalAlignment="Center"
+                            Name="LeftBorder"
+                            Opacity="0.95"
                             Width="166" />
-                        <StackPanel
-                            Canvas.Bottom="31"
-                            Canvas.Left="31"
-                            Canvas.Right="31"
-                            Canvas.Top="31"
-                            Spacing="43">
-                            <ToggleButton
+                        <Canvas>
+                            <Border
                                 Background="Transparent"
-                                Click="ClickOnAnotherButton"
-                                Content="{DynamicResource GPUIcon}"
-                                CornerRadius="20"
-                                Height="90"
-                                IsCheckedChanged="SwitchThemes"
-                                Margin="8"
-                                Name="GPUMode"
-                                Padding="4"
-                                ToolTip.ShowDelay="700"
-                                ToolTip.Tip="GPU mode"
-                                Width="90" />
-                            <Button
-                                Classes="menuToggleButton"
-                                Click="ButtonWithInputBorderClick"
-                                Name="ImportButton"
-                                ToolTip.ShowDelay="700"
-                                ToolTip.Tip="Import">
-                                <Image Source="/Assets/Icons/importLight.png" />
-                            </Button>
-                            <Button
-                                Classes="menuToggleButton"
-                                Click="ClickOnAnotherButton"
-                                Name="FilterButton"
-                                ToolTip.ShowDelay="700"
-                                ToolTip.Tip="Filter">
-                                <Image Source="/Assets/Icons/filterLight.png" />
-                                <Button.Flyout>
-                                    <MenuFlyout
-                                        FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.7"
-                                        Placement="Right"
-                                        VerticalOffset="100">
-                                        <Panel>
-                                            <Border
-                                                Classes="menuBorder"
-                                                HorizontalAlignment="Center"
-                                                Name="FilterBorder"
-                                                VerticalAlignment="Center">
-                                                <StackPanel>
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Gaussian Blur"
-                                                        Name="GaussianBlur" />
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Edges"
-                                                        Name="Edges" />
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Darken"
-                                                        Name="Darken" />
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Lighten"
-                                                        Name="Lighten" />
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Sharpen"
-                                                        Name="Sharpen" />
-                                                </StackPanel>
-                                            </Border>
-                                            <Rectangle
-                                                Classes="rectangularWithShadow"
-                                                Height="{Binding #FilterBorder.Height}"
-                                                Opacity="0.6"
-                                                Width="2" />
-                                        </Panel>
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                            </Button>
-                            <Button
-                                Classes="menuToggleButton"
-                                Click="ClickOnAnotherButton"
-                                Name="FlipButton"
-                                ToolTip.ShowDelay="700"
-                                ToolTip.Tip="Flip">
-                                <Image Source="/Assets/Icons/flipLight.png" />
-                                <Button.Flyout>
-                                    <MenuFlyout
-                                        FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.7"
-                                        Placement="Right"
-                                        VerticalOffset="25">
-                                        <Panel>
-                                            <Border
-                                                Classes="menuBorder"
-                                                HorizontalAlignment="Center"
-                                                Name="FlipBorder"
-                                                VerticalAlignment="Center">
-                                                <StackPanel>
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Vertical"
-                                                        Name="VerticalFlip" />
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Horizontal"
-                                                        Name="HorizontalFlip" />
-                                                </StackPanel>
-                                            </Border>
-                                            <Rectangle
-                                                Classes="rectangularWithShadow"
-                                                Height="{Binding #FlipBorder.Height}"
-                                                Opacity="0.6"
-                                                Width="2" />
-                                        </Panel>
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                            </Button>
-                            <Button
-                                Classes="menuToggleButton"
-                                Click="ClickOnAnotherButton"
-                                Name="RotateButton"
-                                ToolTip.ShowDelay="700"
-                                ToolTip.Tip="Rotate">
-                                <Image Source="/Assets/Icons/rotateLight.png" />
-                                <Button.Flyout>
-                                    <MenuFlyout
-                                        FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.7"
-                                        Placement="Right"
-                                        VerticalOffset="25">
-                                        <Panel>
-                                            <Border
-                                                Classes="menuBorder"
-                                                HorizontalAlignment="Center"
-                                                Name="RotateBorder"
-                                                VerticalAlignment="Center">
-                                                <StackPanel>
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Clockwise"
-                                                        Name="ClockwiseRotate" />
-                                                    <MenuItem
-                                                        Classes="flyoutItem"
-                                                        Click="Process"
-                                                        Header="Counterclockwise"
-                                                        Name="CounterclockwiseRotate" />
-                                                </StackPanel>
-                                            </Border>
-                                            <Rectangle
-                                                Classes="rectangularWithShadow"
-                                                Height="{Binding #RotateBorder.Height}"
-                                                Opacity="0.6"
-                                                Width="2" />
-                                        </Panel>
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                            </Button>
-                            <Button
-                                Classes="menuToggleButton"
-                                Click="ButtonWithInputBorderClick"
-                                Name="SaveButton"
-                                ToolTip.ShowDelay="700"
-                                ToolTip.Tip="Save">
-                                <Image Source="/Assets/Icons/saveLight.png" />
-                            </Button>
-                        </StackPanel>
+                                Height="2100"
+                                HorizontalAlignment="Center"
+                                Tapped="ClickOnBorder"
+                                VerticalAlignment="Center"
+                                Width="166" />
+                            <StackPanel
+                                Canvas.Bottom="31"
+                                Canvas.Left="31"
+                                Canvas.Right="31"
+                                Canvas.Top="31"
+                                Spacing="43">
+                                <ToggleButton
+                                    Background="Transparent"
+                                    Click="ClickOnAnotherButton"
+                                    Content="{DynamicResource GPUIcon}"
+                                    CornerRadius="20"
+                                    Height="90"
+                                    IsCheckedChanged="SwitchThemes"
+                                    Margin="8"
+                                    Name="GPUMode"
+                                    Padding="4"
+                                    ToolTip.ShowDelay="700"
+                                    ToolTip.Tip="GPU mode"
+                                    Width="90" />
+                                <Button
+                                    Classes="menuToggleButton"
+                                    Click="ButtonWithInputBorderClick"
+                                    Name="ImportButton"
+                                    ToolTip.ShowDelay="700"
+                                    ToolTip.Tip="Import">
+                                    <Image Source="/Assets/Icons/importLight.png" />
+                                </Button>
+                                <Button
+                                    Classes="menuToggleButton"
+                                    Click="ClickOnAnotherButton"
+                                    Name="FilterButton"
+                                    ToolTip.ShowDelay="700"
+                                    ToolTip.Tip="Filter">
+                                    <Image Source="/Assets/Icons/filterLight.png" />
+                                    <Button.Flyout>
+                                        <MenuFlyout
+                                            FlyoutPresenterClasses="menuFlyout"
+                                            HorizontalOffset="28.7"
+                                            Placement="Right"
+                                            VerticalOffset="100">
+                                            <Panel>
+                                                <Border
+                                                    Classes="menuBorder"
+                                                    HorizontalAlignment="Center"
+                                                    Name="FilterBorder"
+                                                    VerticalAlignment="Center">
+                                                    <StackPanel>
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Gaussian Blur"
+                                                            Name="GaussianBlur" />
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Edges"
+                                                            Name="Edges" />
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Darken"
+                                                            Name="Darken" />
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Lighten"
+                                                            Name="Lighten" />
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Sharpen"
+                                                            Name="Sharpen" />
+                                                    </StackPanel>
+                                                </Border>
+                                                <Rectangle
+                                                    Classes="rectangularWithShadow"
+                                                    Height="{Binding #FilterBorder.Height}"
+                                                    Opacity="0.6"
+                                                    Width="2" />
+                                            </Panel>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                                <Button
+                                    Classes="menuToggleButton"
+                                    Click="ClickOnAnotherButton"
+                                    Name="FlipButton"
+                                    ToolTip.ShowDelay="700"
+                                    ToolTip.Tip="Flip">
+                                    <Image Source="/Assets/Icons/flipLight.png" />
+                                    <Button.Flyout>
+                                        <MenuFlyout
+                                            FlyoutPresenterClasses="menuFlyout"
+                                            HorizontalOffset="28.7"
+                                            Placement="Right"
+                                            VerticalOffset="25">
+                                            <Panel>
+                                                <Border
+                                                    Classes="menuBorder"
+                                                    HorizontalAlignment="Center"
+                                                    Name="FlipBorder"
+                                                    VerticalAlignment="Center">
+                                                    <StackPanel>
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Vertical"
+                                                            Name="VerticalFlip" />
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Horizontal"
+                                                            Name="HorizontalFlip" />
+                                                    </StackPanel>
+                                                </Border>
+                                                <Rectangle
+                                                    Classes="rectangularWithShadow"
+                                                    Height="{Binding #FlipBorder.Height}"
+                                                    Opacity="0.6"
+                                                    Width="2" />
+                                            </Panel>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                                <Button
+                                    Classes="menuToggleButton"
+                                    Click="ClickOnAnotherButton"
+                                    Name="RotateButton"
+                                    ToolTip.ShowDelay="700"
+                                    ToolTip.Tip="Rotate">
+                                    <Image Source="/Assets/Icons/rotateLight.png" />
+                                    <Button.Flyout>
+                                        <MenuFlyout
+                                            FlyoutPresenterClasses="menuFlyout"
+                                            HorizontalOffset="28.7"
+                                            Placement="Right"
+                                            VerticalOffset="25">
+                                            <Panel>
+                                                <Border
+                                                    Classes="menuBorder"
+                                                    HorizontalAlignment="Center"
+                                                    Name="RotateBorder"
+                                                    VerticalAlignment="Center">
+                                                    <StackPanel>
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Clockwise"
+                                                            Name="ClockwiseRotate" />
+                                                        <MenuItem
+                                                            Classes="flyoutItem"
+                                                            Click="Process"
+                                                            Header="Counterclockwise"
+                                                            Name="CounterclockwiseRotate" />
+                                                    </StackPanel>
+                                                </Border>
+                                                <Rectangle
+                                                    Classes="rectangularWithShadow"
+                                                    Height="{Binding #RotateBorder.Height}"
+                                                    Opacity="0.6"
+                                                    Width="2" />
+                                            </Panel>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                                <Button
+                                    Classes="menuToggleButton"
+                                    Click="ButtonWithInputBorderClick"
+                                    Name="SaveButton"
+                                    ToolTip.ShowDelay="700"
+                                    ToolTip.Tip="Save">
+                                    <Image Source="/Assets/Icons/saveLight.png" />
+                                </Button>
+                            </StackPanel>
+                        </Canvas>
                     </Canvas>
-                </Canvas>
+                </Viewbox>
             </SplitView.Pane>
             <Panel
                 Background="Transparent"
@@ -365,12 +371,6 @@
                 </ScrollViewer>
             </Panel>
         </SplitView>
-        <Rectangle
-            Classes="rectangularWithShadow"
-            Height="2100"
-            Margin="166,0,0,0"
-            Opacity="0.6"
-            Width="5" />
         <Border
             Classes="inputBorder"
             HorizontalAlignment="Center"
