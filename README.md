@@ -16,9 +16,9 @@ ImageProcessingApp is an easy-to-use application with GPU-processing support, wh
 * Vertical/Horizontal flip
 * Save the image by specifying the preferred directory path and naming the file for saving.
 
-|Standard window|
-|:--------------------------------------------------------------------------------------------------------------------|
-| ![image](https://github.com/PolinaSavelyeva/ImageProcessingApp/blob/dev/Assets/Samples/FilterMenu.png) |
+| Standard window                                                                                            |
+|:-----------------------------------------------------------------------------------------------------------|
+| ![image](https://github.com/PolinaSavelyeva/ImageProcessingApp/blob/dev/Assets/Samples/StandardWindow.png) |
 
 
 |GPU mode on|
