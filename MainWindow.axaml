@@ -3,7 +3,7 @@
     MaxHeight="2100"
     MaxWidth="2100"
     MinHeight="450"
-    MinWidth="900"
+    MinWidth="920"
     Name="MainWindow"
     Title="ImageProcessingApp"
     WindowState="Maximized"
@@ -52,9 +52,10 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="CornerRadius" Value="20" />
             <Setter Property="Height" Value="66" />
-            <Setter Property="Margin" Value="20" />
+            <Setter Property="Margin" Value="52,20,20,20" />
             <Setter Property="Padding" Value="7" />
             <Setter Property="Width" Value="66" />
+
         </Style>
         <Style Selector="Border.inputBorder">
             <Setter Property="Background" Value="{DynamicResource StandardThemeBrush}" />
@@ -103,13 +104,6 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
-        <Style Selector="ScrollBar">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
-        <Style Selector="ScrollViewer">
-            <Setter Property="Margin" Value="10" />
-        </Style>
         <Style Selector="MenuItem.flyoutItem">
             <Setter Property="FontSize" Value="23" />
             <Setter Property="FontFamily" Value="Inter" />
@@ -124,12 +118,12 @@
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="Foreground" Value="#989898" />
         </Style>
-        <Style Selector="ScrollBar">
+        <Style Selector="ScrollBar.scrollBar">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="ShowDelay" Value="20" />
         </Style>
-        <Style Selector="ScrollViewer">
+        <Style Selector="ScrollViewer.scrollViewer">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
@@ -148,7 +142,7 @@
             OpenPaneLength="166"
             PaneBackground="Transparent">
             <SplitView.Pane>
-                <Canvas HorizontalAlignment="Left" MaxWidth="180">
+                <Panel Width="180">
                     <Border
                         Background="{DynamicResource PanelBrush}"
                         BorderThickness="0"
@@ -156,33 +150,30 @@
                         Name="LeftBorder"
                         Opacity="0.95"
                         Width="166" />
-                    <Canvas>
-                        <Border
-                            Background="Transparent"
-                            Height="2100"
-                            HorizontalAlignment="Center"
-                            Tapped="ClickOnBorder"
-                            VerticalAlignment="Center"
-                            Width="166" />
-                        <StackPanel
-                            Canvas.Bottom="31"
-                            Canvas.Left="31"
-                            Canvas.Right="31"
-                            Canvas.Top="31"
-                            Spacing="43">
-                            <ToggleButton
-                                Background="Transparent"
-                                Click="ClickOnAnotherButton"
-                                Content="{DynamicResource GPUIcon}"
-                                CornerRadius="20"
-                                Height="90"
-                                IsCheckedChanged="SwitchThemes"
-                                Margin="8"
-                                Name="GPUMode"
-                                Padding="4"
-                                ToolTip.ShowDelay="700"
-                                ToolTip.Tip="GPU mode"
-                                Width="90" />
+                    <Border
+                        Background="Transparent"
+                        Height="2100"
+                        HorizontalAlignment="Center"
+                        Tapped="ClickOnBorder"
+                        VerticalAlignment="Center"
+                        Width="166" />
+                    <ToggleButton
+                        Background="Transparent"
+                        Click="ClickOnAnotherButton"
+                        Content="{DynamicResource GPUIcon}"
+                        CornerRadius="20"
+                        Height="90"
+                        IsCheckedChanged="SwitchThemes"
+                        Margin="40,40,8,8"
+                        Name="GPUMode"
+                        Padding="4"
+                        ToolTip.ShowDelay="700"
+                        ToolTip.Tip="GPU mode"
+                        VerticalAlignment="Top"
+                        Width="90" />
+
+                    <ScrollViewer Margin="0,160,0,0">
+                        <StackPanel Spacing="43">
                             <Button
                                 Classes="menuToggleButton"
                                 Click="ButtonWithInputBorderClick"
@@ -201,7 +192,7 @@
                                 <Button.Flyout>
                                     <MenuFlyout
                                         FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.7"
+                                        HorizontalOffset="45.3"
                                         Placement="Right"
                                         VerticalOffset="100">
                                         <Panel>
@@ -257,7 +248,7 @@
                                 <Button.Flyout>
                                     <MenuFlyout
                                         FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.7"
+                                        HorizontalOffset="45.3"
                                         Placement="Right"
                                         VerticalOffset="25">
                                         <Panel>
@@ -298,7 +289,7 @@
                                 <Button.Flyout>
                                     <MenuFlyout
                                         FlyoutPresenterClasses="menuFlyout"
-                                        HorizontalOffset="28.7"
+                                        HorizontalOffset="45.3"
                                         Placement="Right"
                                         VerticalOffset="25">
                                         <Panel>
@@ -338,8 +329,8 @@
                                 <Image Source="/Assets/Icons/saveLight.png" />
                             </Button>
                         </StackPanel>
-                    </Canvas>
-                </Canvas>
+                    </ScrollViewer>
+                </Panel>
             </SplitView.Pane>
             <Panel
                 Background="Transparent"
