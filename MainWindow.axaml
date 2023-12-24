@@ -1,9 +1,414 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="ImageProcessingApp.MainWindow"
-        Title="ImageProcessingApp">
-    Welcome to Avalonia!
+<Window
+    Icon="/Assets/Icons/logo.ico"
+    MaxHeight="2100"
+    MaxWidth="2100"
+    MinHeight="450"
+    MinWidth="920"
+    Name="MainWindow"
+    Title="ImageProcessingApp"
+    WindowState="Maximized"
+    d:DesignHeight="920"
+    d:DesignWidth="1500"
+    mc:Ignorable="d"
+    x:Class="ImageProcessingApp.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:paz="using:Avalonia.Controls.PanAndZoom"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="BackgroundBrush">#F3F3F3</SolidColorBrush>
+                    <SolidColorBrush x:Key="PanelBrush">#FFFFFF</SolidColorBrush>
+                    <SolidColorBrush x:Key="StandardThemeBrush">White</SolidColorBrush>
+                    <SolidColorBrush x:Key="ReverseStandardThemeBrush">Black</SolidColorBrush>
+                    <SolidColorBrush x:Key="OpenButtonBrush">#f7f7f7</SolidColorBrush>
+                    <Color x:Key="BoxShadowBrush">#ccc8c8</Color>
+                    <Image Source="/Assets/Icons/GPUModeDark.png" x:Key="GPUIcon" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="BackgroundBrush">#444444</SolidColorBrush>
+                    <SolidColorBrush x:Key="PanelBrush">#0A0A0A</SolidColorBrush>
+                    <SolidColorBrush x:Key="StandardThemeBrush">Black</SolidColorBrush>
+                    <SolidColorBrush x:Key="ReverseStandardThemeBrush">White</SolidColorBrush>
+                    <SolidColorBrush x:Key="OpenButtonBrush">Black</SolidColorBrush>
+                    <Color x:Key="BoxShadowBrush">#232323</Color>
+                    <Image Source="/Assets/Icons/GPUModeLight.png" x:Key="GPUIcon" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <LinearGradientBrush EndPoint="100%,100%" StartPoint="0%,100%" x:Key="ShadowLinearGradientBrush">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="Black" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.Styles>
+        <Style Selector="Button.menuToggleButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="Height" Value="66" />
+            <Setter Property="Margin" Value="52,20,20,20" />
+            <Setter Property="Padding" Value="7" />
+            <Setter Property="Width" Value="66" />
+
+        </Style>
+        <Style Selector="Border.inputBorder">
+            <Setter Property="Background" Value="{DynamicResource StandardThemeBrush}" />
+            <Setter Property="CornerRadius" Value="2" />
+            <Setter Property="Width" Value="500" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style Selector="Border.menuBorder">
+            <Setter Property="MinWidth" Value="250" />
+            <Setter Property="Background" Value="{DynamicResource StandardThemeBrush}" />
+            <Setter Property="CornerRadius" Value="0 20 20 0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="BoxShadow" Value="2 4 9 -5 Black" />
+        </Style>
+        <Style Selector="FlyoutPresenter.flyout">
+            <Setter Property="Background" Value="{DynamicResource StandardThemeBrush}" />
+            <Setter Property="CornerRadius" Value="20 20 20 20" />
+            <Setter Property="Width" Value="500" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontWeight" Value="500" />
+            <Setter Property="Foreground" Value="#4b4a4a" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontSize" Value="23" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="{DynamicResource ReverseStandardThemeBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="SelectionForegroundBrush" Value="{DynamicResource BackgroundBrush}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource ReverseStandardThemeBrush}" />
+        </Style>
+        <Style Selector="MenuFlyoutPresenter.menuFlyout">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="MenuItem.flyoutItem">
+            <Setter Property="FontSize" Value="23" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="FontWeight" Value="Medium" />
+        </Style>
+        <Style Selector="ToolTip">
+            <Setter Property="Background" Value="#f3f3f3" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="#989898" />
+        </Style>
+        <Style Selector="ScrollBar.scrollBar">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="ShowDelay" Value="20" />
+        </Style>
+        <Style Selector="ScrollViewer.scrollViewer">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Rectangle.rectangularWithShadow">
+            <Setter Property="Fill" Value="{DynamicResource BoxShadowBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Width" Value="2" />
+            <Setter Property="OpacityMask" Value="{StaticResource ShadowLinearGradientBrush}" />
+        </Style>
+    </Window.Styles>
+    <Panel>
+        <SplitView
+            Background="{DynamicResource BackgroundBrush}"
+            DisplayMode="Inline"
+            IsPaneOpen="True"
+            OpenPaneLength="166"
+            PaneBackground="Transparent">
+            <SplitView.Pane>
+                <Panel Width="180">
+                    <Border
+                        Background="{DynamicResource PanelBrush}"
+                        BorderThickness="0"
+                        Height="2100"
+                        Name="LeftBorder"
+                        Opacity="0.95"
+                        Width="166" />
+                    <Border
+                        Background="Transparent"
+                        Height="2100"
+                        HorizontalAlignment="Center"
+                        Tapped="ClickOnBorder"
+                        VerticalAlignment="Center"
+                        Width="166" />
+                    <ToggleButton
+                        Background="Transparent"
+                        Click="ClickOnAnotherButton"
+                        Content="{DynamicResource GPUIcon}"
+                        CornerRadius="20"
+                        Height="90"
+                        IsCheckedChanged="SwitchThemes"
+                        Margin="40,40,8,8"
+                        Name="GPUMode"
+                        Padding="4"
+                        ToolTip.ShowDelay="700"
+                        ToolTip.Tip="GPU mode"
+                        VerticalAlignment="Top"
+                        Width="90" />
+
+                    <ScrollViewer Margin="0,160,0,0">
+                        <StackPanel Spacing="43">
+                            <Button
+                                Classes="menuToggleButton"
+                                Click="ButtonWithInputBorderClick"
+                                Name="ImportButton"
+                                ToolTip.ShowDelay="700"
+                                ToolTip.Tip="Import">
+                                <Image Source="/Assets/Icons/importLight.png" />
+                            </Button>
+                            <Button
+                                Classes="menuToggleButton"
+                                Click="ClickOnAnotherButton"
+                                Name="FilterButton"
+                                ToolTip.ShowDelay="700"
+                                ToolTip.Tip="Filter">
+                                <Image Source="/Assets/Icons/filterLight.png" />
+                                <Button.Flyout>
+                                    <MenuFlyout
+                                        FlyoutPresenterClasses="menuFlyout"
+                                        HorizontalOffset="45.3"
+                                        Placement="Right"
+                                        VerticalOffset="100">
+                                        <Panel>
+                                            <Border
+                                                Classes="menuBorder"
+                                                HorizontalAlignment="Center"
+                                                Name="FilterBorder"
+                                                VerticalAlignment="Center">
+                                                <StackPanel>
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Gaussian Blur"
+                                                        Name="GaussianBlur" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Edges"
+                                                        Name="Edges" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Darken"
+                                                        Name="Darken" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Lighten"
+                                                        Name="Lighten" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Sharpen"
+                                                        Name="Sharpen" />
+                                                </StackPanel>
+                                            </Border>
+                                            <Rectangle
+                                                Classes="rectangularWithShadow"
+                                                Height="{Binding #FilterBorder.Height}"
+                                                Opacity="0.6"
+                                                Width="2" />
+                                        </Panel>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                            <Button
+                                Classes="menuToggleButton"
+                                Click="ClickOnAnotherButton"
+                                Name="FlipButton"
+                                ToolTip.ShowDelay="700"
+                                ToolTip.Tip="Flip">
+                                <Image Source="/Assets/Icons/flipLight.png" />
+                                <Button.Flyout>
+                                    <MenuFlyout
+                                        FlyoutPresenterClasses="menuFlyout"
+                                        HorizontalOffset="45.3"
+                                        Placement="Right"
+                                        VerticalOffset="25">
+                                        <Panel>
+                                            <Border
+                                                Classes="menuBorder"
+                                                HorizontalAlignment="Center"
+                                                Name="FlipBorder"
+                                                VerticalAlignment="Center">
+                                                <StackPanel>
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Vertical"
+                                                        Name="VerticalFlip" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Horizontal"
+                                                        Name="HorizontalFlip" />
+                                                </StackPanel>
+                                            </Border>
+                                            <Rectangle
+                                                Classes="rectangularWithShadow"
+                                                Height="{Binding #FlipBorder.Height}"
+                                                Opacity="0.6"
+                                                Width="2" />
+                                        </Panel>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                            <Button
+                                Classes="menuToggleButton"
+                                Click="ClickOnAnotherButton"
+                                Name="RotateButton"
+                                ToolTip.ShowDelay="700"
+                                ToolTip.Tip="Rotate">
+                                <Image Source="/Assets/Icons/rotateLight.png" />
+                                <Button.Flyout>
+                                    <MenuFlyout
+                                        FlyoutPresenterClasses="menuFlyout"
+                                        HorizontalOffset="45.3"
+                                        Placement="Right"
+                                        VerticalOffset="25">
+                                        <Panel>
+                                            <Border
+                                                Classes="menuBorder"
+                                                HorizontalAlignment="Center"
+                                                Name="RotateBorder"
+                                                VerticalAlignment="Center">
+                                                <StackPanel>
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Clockwise"
+                                                        Name="ClockwiseRotate" />
+                                                    <MenuItem
+                                                        Classes="flyoutItem"
+                                                        Click="Process"
+                                                        Header="Counterclockwise"
+                                                        Name="CounterclockwiseRotate" />
+                                                </StackPanel>
+                                            </Border>
+                                            <Rectangle
+                                                Classes="rectangularWithShadow"
+                                                Height="{Binding #RotateBorder.Height}"
+                                                Opacity="0.6"
+                                                Width="2" />
+                                        </Panel>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                            <Button
+                                Classes="menuToggleButton"
+                                Click="ButtonWithInputBorderClick"
+                                Name="SaveButton"
+                                ToolTip.ShowDelay="700"
+                                ToolTip.Tip="Save">
+                                <Image Source="/Assets/Icons/saveLight.png" />
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Panel>
+            </SplitView.Pane>
+            <Panel
+                Background="Transparent"
+                Height="2100"
+                Width="2100">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                    <paz:ZoomBorder
+                        Background="Transparent"
+                        ClipToBounds="True"
+                        Focusable="True"
+                        HorizontalAlignment="Stretch"
+                        Stretch="None"
+                        Tapped="ClickOnBorder"
+                        VerticalAlignment="Stretch"
+                        ZoomSpeed="1.4">
+
+                        <Image
+                            Height="920"
+                            Name="Image"
+                            Source="Assets/Temporary/main.png"
+                            Width="1500" />
+                    </paz:ZoomBorder>
+                </ScrollViewer>
+            </Panel>
+        </SplitView>
+        <Rectangle
+            Classes="rectangularWithShadow"
+            Height="2100"
+            Margin="166,0,0,0"
+            Opacity="0.6"
+            Width="5" />
+        <Border
+            Classes="inputBorder"
+            HorizontalAlignment="Center"
+            IsVisible="False"
+            Name="ImportBorder"
+            VerticalAlignment="Center">
+            <StackPanel Spacing="10">
+                <TextBox Name="PathToImport" Watermark="Full path to directory to import image" />
+                <Border
+                    Background="{DynamicResource OpenButtonBrush}"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,20,0">
+                    <Button
+                        Background="Transparent"
+                        Click="ImportImage"
+                        FontSize="16"
+                        FontWeight="Light"
+                        Foreground="{DynamicResource ReverseStandardThemeBrush}"
+                        HorizontalAlignment="Right">
+                        Open
+                    </Button>
+                </Border>
+            </StackPanel>
+        </Border>
+        <Border
+            Classes="inputBorder"
+            HorizontalAlignment="Center"
+            IsVisible="false"
+            Name="SaveBorder"
+            VerticalAlignment="Center">
+            <StackPanel Spacing="10">
+                <TextBox Name="PathToSave" Watermark="Full path to save the image" />
+                <Border
+                    Background="{DynamicResource OpenButtonBrush}"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,20,0">
+                    <Button
+                        Background="Transparent"
+                        Click="SaveImage"
+                        FontSize="16"
+                        FontWeight="Light"
+                        Foreground="{DynamicResource ReverseStandardThemeBrush}"
+                        HorizontalAlignment="Right">
+                        Save
+                    </Button>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Panel>
 </Window>
