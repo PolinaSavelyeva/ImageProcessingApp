@@ -18,16 +18,16 @@ ImageProcessingApp is an easy-to-use application with GPU-processing support, wh
 
 | Standard window                                                                                            |
 |:-----------------------------------------------------------------------------------------------------------|
-| ![image](https://github.com/PolinaSavelyeva/ImageProcessingApp/blob/dev/Assets/Samples/StandardWindow.png) |
+| ![image](Assets/Samples/StandardWindow.png) |
 
 
 |GPU mode on|
 |:-----------------------------------------------------------------------------------------------------------------|
-| ![image](https://github.com/PolinaSavelyeva/ImageProcessingApp/blob/dev/Assets/Samples/GPUModeOn.png)     |
+| ![image](Assets/Samples/GPUModeOn.png)     |
 
 |Filter menu|
 |:-----------------------------------------------------------------------------------------------------------------------|
-| ![image](https://github.com/PolinaSavelyeva/ImageProcessingApp/blob/dev/Assets/Samples/FilterMenu.png) |
+| ![image](Assets/Samples/FilterMenu.png) |
 
 ## Simple Usage
 
